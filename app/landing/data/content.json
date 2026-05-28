@@ -1,0 +1,343 @@
+{
+  "seo": {
+    "title": "FyTic — IA jurídica para despachos legales",
+    "description": "La primera inteligencia artificial jurídica para abogados en México y LATAM. Investiga, organiza y argumenta con evidencia siempre trazable.",
+    "author": "FyTic",
+    "ogTitle": "FyTic — Inteligencia para investigaciones legales",
+    "ogDescription": "Software para despachos que se niegan a perder evidencia. Investigación potenciada de raíz.",
+    "twitterSite": "@fytic_mx"
+  },
+  "brand": {
+    "name": "FyTic",
+    "tagline": "Inteligencia para investigaciones legales",
+    "city": "Monterrey, MX",
+    "disclaimer": "FyTic es un desarrollo tecnológico que respeta la privacidad y confidencialidad de los datos legales siendo 100% confidencial. No es un despacho ni ofrece asesoría jurídica. Su función es potenciar la investigación legal, no reemplazar el juicio profesional de los abogados."
+  },
+  "nav": {
+    "product": "Producto",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "waitlist": "Lista de espera",
+    "demo": "Unirme",
+    "closeMenu": "Cerrar menú",
+    "openMenu": "Abrir menú"
+  },
+  "hero": {
+    "edition": "SCJN · DOF · Códigos",
+    "whisper": "Múltiples Clientes",
+    "brand": "Mexicana",
+    "headline1": "Primera",
+    "headlineEm": "IA jurídica",
+    "headline2": " CERO alucinaciones",
+    "body": "Hecha para abogados que defienden clientes, no para abogados de oficina. Investigación verificada, redacción, gestión de casos y comunicación con clientes"
+  },
+  "suck": {
+    "title": "FyTic",
+    "bullets": [
+      "diseñado para investigar",
+      "precisión en cada documento",
+      "siempre activo, siempre aprendiendo"
+    ]
+  },
+  "gridPhrases": [
+    "Procuración",
+    "Litigio",
+    "Gestionar",
+    "Calendario",
+    "IA legal ",
+    "Organización"
+  ],
+  "featuresSection": {
+    "eyebrow": "Seis flujos. Un sistema.",
+    "title": "Lo que FyTic",
+    "titleEm": "reemplaza",
+    "titleSuffix": "en tu despacho."
+  },
+  "features": [
+    {
+      "number": "01",
+      "tag": "Research AI",
+      "title": "Investigación jurídica verificada",
+      "teaser": "Hallucinations: zero.",
+      "body": "Razona sobre el corpus legal mexicano completo: DOF, jurisprudencia de la SCJN, tesis aisladas, códigos federales y estatales. Cada hallazgo devuelve número de tesis, fecha y fuente verificable. Si la fuente no existe, FyTic lo dice.",
+      "meta": "Funcionalidad 01",
+      "imageKey": "constitution"
+    },
+    {
+      "number": "02",
+      "tag": "Document Editor",
+      "title": "Editor con IA en contexto",
+      "teaser": "Tu despacho. Tu voz.",
+      "body": "Editor de documentos completo dentro de la plataforma — equivalente a Word o Google Docs — con una barra lateral de IA que tiene contexto total del caso activo: expediente, cliente, jurisprudencia relevante y el estilo de escritura del abogado.",
+      "meta": "Funcionalidad 02",
+      "imageKey": "docEditor"
+    },
+    {
+      "number": "03",
+      "tag": "Document Storage",
+      "title": "Almacenamiento legal con contexto",
+      "teaser": "Google Drive, pensado para litigio.",
+      "body": "Documentos organizados por cliente, expediente y tipo, integrados con el editor y la IA de investigación. El contexto del caso informa búsquedas y drafts automáticamente. No es un drive con otro logo.",
+      "meta": "Funcionalidad 03",
+      "imageKey": "archivos"
+    },
+    {
+      "number": "04",
+      "tag": "Plantillas",
+      "title": "Plantillas verificadas por estado",
+      "teaser": "Se adaptan a tu despacho con el tiempo.",
+      "body": "Plantillas jurídicas verificadas para demanda, contestación, amparo y recurso administrativo — por estado de la República Mexicana. El output no suena a template. Suena a ese abogado.",
+      "meta": "Funcionalidad 04",
+      "imageKey": "plantillas"
+    },
+    {
+      "number": "05",
+      "tag": "Case Management",
+      "title": "Kanban y calendario procesal",
+      "teaser": "Sin duplicar información entre sistemas.",
+      "body": "Gestión de casos tipo Kanban con calendario integrado y conexión nativa a Google Calendar y Microsoft Outlook. Plazos procesales visibles, responsables asignados, todo en un solo lugar.",
+      "meta": "Funcionalidad 05",
+      "imageKey": "actEquipo"
+    },
+    {
+      "number": "06",
+      "tag": "Client Portal",
+      "title": "Portal de seguimiento para clientes",
+      "teaser": "Elimina el ciclo de WhatsApp.",
+      "body": "El cliente ve el estado real de su expediente desde el celular, actualizado sin que el abogado redacte actualizaciones manuales. Elimina el ciclo de mensajes '¿en qué va mi caso?' sin añadir trabajo al despacho.",
+      "meta": "Funcionalidad 06",
+      "imageKey": "chat"
+    },
+    {
+      "number": "07",
+      "tag": "Calendar Portal",
+      "title": "Calendario de seguimiento de actividades",
+      "teaser": "Deja de olvidar fechas importantes.",
+      "body": "El abogado puede visualizar un portal de calendario personal que le permite ver fechas importantes, avances en la investigación y próximos pasos. Organizacion interna que fortalece la comunicación.",
+      "meta": "Funcionalidad 07",
+      "imageKey": "calendar"
+    }
+  ],
+  "statsBar": [
+    {
+      "value": "10h",
+      "label": "→ 10 minutos",
+      "sub": "Lo que te toma un día, FyTic lo hace en una reunión."
+    },
+    {
+      "value": "0",
+      "label": "alucinaciones",
+      "sub": "Cada cita tiene número de tesis, fecha y fuente."
+    },
+    {
+      "value": "100%",
+      "label": "corpus legal mexicano",
+      "sub": "DOF · SCJN · Códigos federales y estatales."
+    }
+  ],
+  "principlesSection": {
+    "eyebrow": "Algunas cosas en las que creemos",
+    "title": "Lo silencioso que",
+    "titleEm": "de verdad",
+    "titleSuffix": "importa."
+  },
+  "principles": [
+    {
+      "title": "Curiosidad",
+      "teaser": "Empezamos por las preguntas que nadie hace.",
+      "body": "Toda investigación poderosa empieza con un por qué silencioso. Damos a nuestros equipos el tiempo, las herramientas y la confianza para perseguir lo poco evidente — porque las respuestas más útiles para un caso suelen estar justo después de lo obvio.",
+      "meta": "Principio 01"
+    },
+    {
+      "title": "Oficio",
+      "teaser": "Construido con calma, con propósito.",
+      "body": "Cuidamos lo pequeño: cómo se siente un flujo, el ritmo de una revisión, la forma en que un dato aparece en pantalla. El oficio es lo que convierte una buena idea en una herramienta de la que un litigante quiere depender.",
+      "meta": "Principio 02"
+    },
+    {
+      "title": "Equipo",
+      "teaser": "Salas tranquilas, ideas firmes.",
+      "body": "El mejor trabajo ocurre cuando gente brillante se siente segura de equivocarse en voz alta. Lo protegemos: equipos pequeños, conversaciones reales y una cultura a la que vale la pena llegar el lunes.",
+      "meta": "Principio 03"
+    }
+  ],
+  "columns": {
+    "eyebrow": "Dentro del trabajo",
+    "title1": "Momentos del",
+    "titleEm": "día a día",
+    "body": "El despacho a media luz. Una pluma a mitad de un argumento. La pausa entre dos preguntas en un interrogatorio. Son los pequeños intermedios los que dan forma a cada caso."
+  },
+  "clientsSection": {
+    "eyebrow": "Confían en nosotros equipos legales en",
+    "title": "Despachos que ya investigan con FyTic",
+    "cta": "Unirme a la lista"
+  },
+  "homeCta": {
+    "word": "FyTic",
+    "button": "Unirme a la lista"
+  },
+  "about": {
+    "eyebrow": "Sobre FyTic",
+    "headline1": "Tecnología que",
+    "headlineEm": "piensa como jurista.",
+    "body": "No como ingeniero.",
+    "missionEyebrow": "Nuestra misión",
+    "missionTitle": "La primera IA jurídica construida 100% desde la perspectiva del abogado — sin importar la tecnología que eso requiera desarrollar.",
+    "missionP1": "Las investigaciones se ganan o se pierden en los detalles. Pero la mayoría de los equipos legales todavía las arman con hojas de cálculo, drives compartidos y memoria.",
+    "missionP2": "FyTic es el tejido conectivo de la investigación legal: ingiere cualquier documento, eleva lo que importa y deja al equipo pasar de la pregunta al argumento sin perder un solo hilo.",
+    "valuesEyebrow": "Por qué FyTic",
+    "values": [
+      {
+        "k": "01",
+        "t": "Perspectiva 100% legal",
+        "d": "Cada funcionalidad surge de flujos reales del despacho. Construimos desde adentro — no desde lo que un ingeniero imagina que un abogado necesita."
+      },
+      {
+        "k": "02",
+        "t": "Tec de Monterrey",
+        "d": "Respaldados por la incubadora del Tecnológico de Monterrey con dos certificaciones al avance en desarrollo tecnológico y de mercado."
+      },
+      {
+        "k": "03",
+        "t": "Investigación de punta",
+        "d": "Desarrollamos NLP y embeddings revolucionarios para el derecho mexicano. Buscamos funding para contratar expertos con PhD en IA."
+      }
+    ],
+    "closing1": "Hecho en Monterrey.",
+    "closingEm": "Para el mundo legal.",
+    "gallery": {
+      "eyebrow": "Detrás del despacho",
+      "title": "El oficio,",
+      "titleEm": "en imágenes"
+    }
+  },
+  "product": {
+    "eyebrow": "El producto",
+    "headline1": "El único software",
+    "headlineEm": "hecho para despachos mexicanos.",
+    "body": "Un sistema completo para el despacho de litigio: investigación verificada, redacción, gestión de casos y comunicación con clientes — en un solo lugar, sin cambiar de herramienta.",
+    "howEyebrow": "Seis funcionalidades",
+    "howTitle1": "Construido para el flujo completo",
+    "howTitleEm": "de tu despacho.",
+    "ctaTitle": "Ve a FyTic operando sobre un caso real.",
+    "ctaButton": "Unirme a la lista",
+    "gallery": {
+      "eyebrow": "La plataforma en uso",
+      "title": "Investigación",
+      "titleEm": "en movimiento"
+    }
+  },
+  "diagram": {
+    "hub": "Núcleo FyTic",
+    "branches": [
+      { "id": "b1", "label": "Expediente" },
+      { "id": "b2", "label": "Hallazgos" },
+      { "id": "b3", "label": "Escritos" }
+    ],
+    "discarded": [
+      { "id": "d1", "label": "Línea descartada" },
+      { "id": "d2", "label": "Fuera de hipótesis" },
+      { "id": "d3", "label": "No probado" }
+    ],
+    "indirect": [
+      { "id": "i1", "label": "Vínculo oculto" },
+      { "id": "i2", "label": "Referencia cruzada" },
+      { "id": "i3", "label": "Nuevo testigo" },
+      { "id": "i4", "label": "Anomalía" }
+    ],
+    "captionEyebrow": "Caos disperso",
+    "captionTitle": "Un solo lugar para darle sentido a todo.",
+    "floaters": {
+      "folders": ["Demandas", "Pruebas", "Periciales", "Contratos", "Ofic. judiciales", "Notarial"],
+      "questions": ["¿Quién firmó?", "?", "¿Cuándo ocurrió?", "?", "?", "¿Hay precedente?"]
+    }
+  },
+  "waitlist": {
+    "eyebrow": "Acceso anticipado",
+    "title": "Únete a la lista de espera.",
+    "subtitle": "Sé de los primeros despachos en acceder a FyTic.",
+    "closedTitle": "La lista está cerrada por ahora.",
+    "closedBody": "Pronto abriremos un nuevo periodo de registro. También puedes escribirnos a",
+    "successTitle": "¡Ya estás en lista!",
+    "successBody": "Te avisaremos en cuanto FyTic esté listo para tu despacho.",
+    "successSub": "Revisa tu correo en los próximos días.",
+    "nextButton": "Siguiente",
+    "submitButton": "Confirmar",
+    "stepOf": "de",
+    "email": "fytic.tech@gmail.com",
+    "steps": {
+      "name": {
+        "question": "¿Cuál es tu nombre?",
+        "placeholder": "Tu nombre completo",
+        "error": "Ingresa tu nombre"
+      },
+      "email": {
+        "question": "¿Cuál es tu correo electrónico?",
+        "placeholder": "tu@correo.com",
+        "error": "Ingresa un correo válido"
+      },
+      "role": {
+        "question": "¿Cómo describes tu práctica legal?",
+        "options": [
+          { "value": "despacho", "label": "Despacho o firma legal" },
+          { "value": "independiente", "label": "Abogado independiente" },
+          { "value": "otro", "label": "Estudiante u otro" }
+        ]
+      },
+      "position": {
+        "question": "¿Cuál es tu rol en el despacho?",
+        "options": [
+          { "value": "socio", "label": "Socio o titular" },
+          { "value": "asociado", "label": "Asociado o pasante" }
+        ]
+      },
+      "caseload": {
+        "question": "¿Cuántos casos gestionas al mes?",
+        "options": [
+          { "value": "1-5", "label": "1 – 5 casos" },
+          { "value": "6-20", "label": "6 – 20 casos" },
+          { "value": "20+", "label": "Más de 20 casos" }
+        ]
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contacto",
+    "title": "Hablemos de tu próximo caso",
+    "body": "Cuéntanos sobre tu despacho y los retos de investigación que enfrentas. Te respondemos en menos de 24 horas hábiles.",
+    "backing": "Respaldados por la incubadora del Tecnológico de Monterrey — dos certificaciones por avances en desarrollo tecnológico y de mercado.",
+    "fields": {
+      "name": "Nombre completo",
+      "firm": "Despacho o área legal",
+      "email": "Correo electrónico",
+      "message": "¿En qué podemos ayudarte?"
+    },
+    "submit": "Enviar mensaje",
+    "success": "Gracias. Hemos recibido tu mensaje y te contactaremos pronto.",
+    "alt": "También puedes escribirnos a",
+    "email": "fytic.tech@gmail.com"
+  },
+  "founders": [
+    {
+      "name": "Luis Delgadillo",
+      "role": "CEO",
+      "area": "Ciencias Computacionales",
+      "bio": "Ex-intern de IA en General Motors y ex-Data Engineer en startup. Desarrolló un sistema de gestión de riesgos con IA para la Marina de México. Ha colaborado con BOCAR, Cesvi, MIT, Databricks y Banamex — los últimos tres en hackathones. Fascinado por la IA de vanguardia y los eventos de emprendimiento.",
+      "tag": "Ingeniería & IA"
+    },
+    {
+      "name": "María Elena Torres",
+      "role": "CPO",
+      "area": "Derecho",
+      "bio": "Estudiante de Derecho y becaria en despacho jurídico. Destaca en debates por sus estrategias de investigación y argumentación. Construye FyTic desde la perspectiva 100% del abogado: cada flujo responde a una necesidad real del litigio.",
+      "tag": "Legal & Producto"
+    },
+    {
+      "name": "Víctor Fernández",
+      "role": "CFO",
+      "area": "Contaduría",
+      "bio": "Ex-intern en KPMG y socio en negocios de manufactura locales. Opera a la vanguardia de las necesidades de la industria con foco en inversión y estructuración financiera del startup.",
+      "tag": "Finanzas & Estrategia"
+    }
+  ]
+}

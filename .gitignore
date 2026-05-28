@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.env
+.env.local
+
+# Waitlist entries grow with real data — don't commit
+app/landing/data/waitlist.json
