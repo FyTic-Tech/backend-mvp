@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     frontend_url: str = "http://localhost:5173"
     environment: str = "development"
 
+    supabase_url: str = ""
+    supabase_service_key: str = ""
+
     @property
     def is_dev(self) -> bool:
         return self.environment != "production"

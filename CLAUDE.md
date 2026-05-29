@@ -45,6 +45,7 @@ backend-mvp/
 | `GET` | `/api/clients` | `{ visible, clients[] }` — controls carousel section |
 | `GET` | `/api/waitlist` | `{ active }` — controls form vs closed-state |
 | `POST` | `/api/waitlist` | Submit entry `{ name, email, role, position, caseload }` |
+| `POST` | `/api/contact` | Submit contact form `{ name, firm, email, message }` |
 
 ### Toggle behaviour via data files
 
@@ -84,13 +85,41 @@ Server starts at `http://localhost:8000`. Interactive docs at `http://localhost:
 | `PORT` | `8000` | Server port |
 | `ENVIRONMENT` | `development` | Set to `production` to enforce CORS |
 | `FRONTEND_URL` | `http://localhost:5173` | Allowed origin in production |
+| `SUPABASE_URL` | `""` | Project URL from Settings → API |
+| `SUPABASE_SERVICE_KEY` | `""` | Service role key from Settings → API (secret) |
 
 ---
 
-## Supabase Migration (pending)
+## Supabase
 
-When ready, replace `_load` / `_save` calls in `app/landing/router.py` with Supabase calls.
-No changes needed to `models.py` or `main.py`.
+**Status:** Integrated for waitlist, clients, and contacts. `content.json` remains a static file (site copy).
+
+### Tables (3 total)
+
+Each table uses a `_config` sentinel row (where applicable) so one table handles both settings and data.
+
+| Table | `id = '_config'` row | Other rows |
+|---|---|---|
+| `waitlist` | `active bool` — toggles form open/closed | One row per waitlist submission |
+| `clients` | `visible bool` — toggles carousel visibility | One row per law firm client |
+| `contacts` | — (no config needed) | One row per contact-form submission |
+
+**Toggle waitlist off:**
+```sql
+update waitlist set active = false where id = '_config';
+```
+**Show clients carousel:**
+```sql
+update clients set visible = true where id = '_config';
+```
+**Add a law firm:**
+```sql
+insert into clients (name, sort_order) values ('Nombre del Despacho', 1);
+```
+
+**Client:** `app/db.py` exposes `get_db() -> Client` (lazy singleton, uses `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` env vars).
+
+**Key:** Always use the **service role key** (Settings → API → Service Role) — never the publishable key — so the backend can bypass RLS.
 
 ---
 
