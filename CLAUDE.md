@@ -2,8 +2,12 @@
 
 ## Overview
 
-FastAPI backend for FyTic. Currently serves the landing page (`fytic-website-mvp`).
+FastAPI backend for FyTic. Serves the landing page (`fytic-website-mvp`).
 Designed to scale into an AI SaaS — new feature areas are added as separate modules, never touching `app/landing/`.
+
+**Production URL:** `https://backend-mvp-production-8e67.up.railway.app` (Railway)  
+**Docs:** `https://backend-mvp-production-8e67.up.railway.app/docs`  
+**Start command (Railway + local):** `python main.py` — reads `PORT` from env, hot-reload only in development.
 
 ---
 
@@ -20,11 +24,9 @@ backend-mvp/
     │
     ├── landing/             # Landing-page API — self-contained, keep it simple
     │   ├── models.py        # Pydantic I/O models
-    │   ├── router.py        # 4 routes (content, clients, waitlist ×2)
-    │   └── data/            # JSON data files (Supabase-ready, see below)
-    │       ├── content.json # Full site copy served to frontend
-    │       ├── clients.json # Client carousel visibility + names
-    │       └── waitlist.json  # NOT committed (grows with real entries)
+    │   ├── router.py        # 5 routes (content, clients, waitlist ×2, contact)
+    │   └── data/
+    │       └── content.json # Full site copy served to frontend (waitlist/clients in Supabase)
     │
     # Future modules go here at the same level as landing/:
     # ├── ai/
