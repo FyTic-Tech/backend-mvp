@@ -5,8 +5,11 @@ class WaitlistEntryCreate(BaseModel):
     name: str
     email: EmailStr
     role: str = ""
-    position: str = ""
-    caseload: str = ""
+    area: str = ""
+    problematic: str = ""
+    tools: str = ""
+    process: str = ""
+    fytic_question: str = ""
 
     @field_validator("name", mode="before")
     @classmethod

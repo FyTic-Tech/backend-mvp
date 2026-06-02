@@ -17,7 +17,7 @@
     "product": "Producto",
     "about": "Nosotros",
     "contact": "Contacto",
-    "waitlist": "Waitlist",
+    "waitlist": "Acceso anticipado",
     "demo": "Unirme",
     "closeMenu": "Cerrar menú",
     "openMenu": "Abrir menú"
@@ -253,7 +253,11 @@
     }
   },
   "waitlist": {
-    "eyebrow": "Acceso anticipado",
+    "context_title": "Ayúdanos a construir mejores herramientas para abogados.",
+    "context_body": "Estamos entrevistando abogados y despachos para entender sus procesos y necesidades.",
+    "context_eyebrow": "Toma menos de 1 minuto.",
+    "context_button": "Comenzar",
+    "eyebrow": "¿Los abogados usan herramientas digitales?",
     "title": "Asegura tu reputación y gana una ventaja competitiva.",
     "subtitle": "Sé de los primeros despachos en acceder a FyTic.",
     "closedTitle": "La lista está cerrada por ahora.",
@@ -266,7 +270,60 @@
     "stepOf": "de",
     "email": "fytic.tech@gmail.com",
     "steps": {
+      "role": {
+        "question": "¿Cómo describes tu práctica legal?",
+        "options": [
+          { "value": "despacho", "label": "Despacho o firma legal" },
+          { "value": "independiente", "label": "Abogado independiente" },
+          { "value": "becario", "label": "Estudiante o becario" },
+          { "value": "corporativo", "label": "Área corporativa" },
+          { "value": "otro", "label": "Otro" }
+        ]
+      },
+      "area": {
+        "question": "¿En qué área trabajas principalmente?",
+        "options": [
+          { "value": "civil", "label": "Civil" },
+          { "value": "mercantil", "label": "Mercantil" },
+          { "value": "penal", "label": "Penal" },
+          { "value": "laboral", "label": "Laboral" },
+          { "value": "fiscal", "label": "Fiscal" },
+          { "value": "corporativo", "label": "Corporativo" },
+          { "value": "otro", "label": "Otro" }
+        ]
+      },
+      "problematic": {
+        "question": "¿Cuál es el mayor problema o frustración en tu trabajo diario?",
+        "placeholder": "Describe tu mayor problema",
+        "error": "Ingresa una descripción"
+      },
+      "tools": {
+        "question": "¿Utilizas herramientas de software o IA en tu trabajo?",
+        "options": [
+          { "value": "frecuentemente", "label": "Frecuentemente" },
+          { "value": "ocasionalmente", "label": "Ocasionalmente" },
+          { "value": "las he probado", "label": "Las he probado" },
+          { "value": "nunca", "label": "Nunca" }
+        ]
+      },
+      "process": {
+        "question": "¿Qué proceso aún se podría mejorar?",
+        "placeholder": "Procesos que podrían ser más eficientes",
+        "error": "Ingresa una descripción"
+      },
+      "fytic_question": {
+        "question_title": "Fytic es un sistema juridico mexicano",
+        "description": "- Calendario de actividades\n- Editor de documentos con IA\n- Investigación verificada\n- Portal para clientes\n- Almacenamiento organizado\n- Plantillas por estado",
+        "question": "¿Estarías interesado en probar esta herramienta?",
+        "options": [
+          { "value": "si", "label": "Sí" },
+          { "value": "tal_vez", "label": "Tal vez" },
+          { "value": "no", "label": "No" }
+        ]
+      },
       "name": {
+        "question_title": "Para aquellos que quieren una ventaja competitiva.",
+        "description": "Únete a la lista de espera y sé de los primeros en usar FyTic en México.",
         "question": "Nombre completo o del despacho",
         "placeholder": "Tu nombre completo",
         "error": "Ingresa tu nombre"
@@ -275,30 +332,6 @@
         "question": "Correo electrónico",
         "placeholder": "tu@correo.com",
         "error": "Ingresa un correo válido"
-      },
-      "role": {
-        "question": "¿Cómo describes tu práctica legal?",
-        "options": [
-          { "value": "despacho", "label": "Despacho o firma legal" },
-          { "value": "independiente", "label": "Abogado independiente" },
-          { "value": "otro", "label": "Estudiante u otro" }
-        ]
-      },
-      "position": {
-        "question": "¿Cuál es tu rol en el despacho?",
-        "options": [
-          { "value": "socio", "label": "Socio o titular" },
-          { "value": "asociado", "label": "Asociado o pasante" }
-        ]
-      },
-      "caseload": {
-        "question": "¿Cuántos casos gestiona al mes?",
-        "options": [
-          { "value": "1-5", "label": "10 – 20 casos" },
-          { "value": "6-20", "label": "21 – 50 casos" },
-          { "value": "6-20", "label": "51 – 100 casos" },
-          { "value": "20+", "label": "Más de 100 casos" }
-        ]
       }
     }
   },
