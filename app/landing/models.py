@@ -9,6 +9,7 @@ class WaitlistEntryCreate(BaseModel):
     problematic: str = ""
     tools: str = ""
     process: str = ""
+    ai_question: str = ""
     fytic_question: str = ""
 
     @field_validator("name", mode="before")

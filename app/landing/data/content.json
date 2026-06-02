@@ -298,21 +298,21 @@
         "error": "Ingresa una descripción"
       },
       "tools": {
-        "question": "¿Utilizas herramientas de software o IA en tu trabajo?",
-        "options": [
-          { "value": "frecuentemente", "label": "Frecuentemente" },
-          { "value": "ocasionalmente", "label": "Ocasionalmente" },
-          { "value": "las he probado", "label": "Las he probado" },
-          { "value": "nunca", "label": "Nunca" }
-        ]
-      },
-      "process": {
-        "question": "¿Qué proceso aún se podría mejorar?",
-        "placeholder": "Procesos que podrían ser más eficientes",
+        "question": "¿Usas algún software o herramienta para apoyar su trabajo?",
+        "placeholder": "Describe las herramientas que usas actualmente...",
         "error": "Ingresa una descripción"
       },
+      "process": {
+        "question": "¿Qué tanto crees que aún podrían mejorar?",
+        "options": [
+          { "value": "mucho", "label": "Mucho" },
+          { "value": "bastante", "label": "Bastante" },
+          { "value": "regular", "label": "Regular" },
+          { "value": "poco", "label": "Poco" }
+        ]
+      },
       "fytic_question": {
-        "question_title": "Fytic es un sistema juridico mexicano",
+        "question_title": "FyTic lo resuelve por ti",
         "description": "- Calendario de actividades\n- Editor de documentos con IA\n- Investigación verificada\n- Portal para clientes\n- Almacenamiento organizado\n- Plantillas por estado",
         "question": "¿Estarías interesado en probar esta herramienta?",
         "options": [
@@ -321,8 +321,15 @@
           { "value": "no", "label": "No" }
         ]
       },
+      "ai_question": {
+        "question": "¿Las IA's hacen lo suficiente para tus necesidades?",
+        "options": [
+          { "value": "si", "label": "Sí" },
+          { "value": "podria_mejorar", "label": "Podría Mejorar" },
+          { "value": "no", "label": "No" }
+        ]
+      },
       "name": {
-        "question_title": "Para aquellos que quieren una ventaja competitiva.",
         "description": "Únete a la lista de espera y sé de los primeros en usar FyTic en México.",
         "question": "Nombre completo o del despacho",
         "placeholder": "Tu nombre completo",
