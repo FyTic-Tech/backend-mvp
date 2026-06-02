@@ -253,10 +253,10 @@
     }
   },
   "waitlist": {
-    "context_title": "Ayúdanos a construir mejores herramientas para abogados.",
-    "context_body": "Estamos entrevistando abogados y despachos para entender sus procesos y necesidades.",
-    "context_eyebrow": "Toma menos de 1 minuto.",
-    "context_button": "Comenzar",
+    "context_title": "Cuéntanos cómo trabajas",
+    "context_body": "5 preguntas sobre tu rutina como abogado. Tus respuestas nos ayudan a entender mejor la práctica legal en México.",
+    "context_eyebrow": "Encuesta rápida · 1 minuto",
+    "context_button": "Responder",
     "eyebrow": "¿Los abogados usan herramientas digitales?",
     "title": "Asegura tu reputación y gana una ventaja competitiva.",
     "subtitle": "Sé de los primeros despachos en acceder a FyTic.",
@@ -298,7 +298,7 @@
         "error": "Ingresa una descripción"
       },
       "tools": {
-        "question": "¿Usas algún software o herramienta para apoyar su trabajo?",
+        "question": "¿Usas algún software o herramienta para apoyar su trabajo? [¿Cuáles?]",
         "placeholder": "Describe las herramientas que usas actualmente...",
         "error": "Ingresa una descripción"
       },
@@ -312,9 +312,9 @@
         ]
       },
       "fytic_question": {
-        "question_title": "FyTic lo resuelve por ti",
+        "question_title": "6 herramientas · Un solo lugar",
         "description": "- Calendario de actividades\n- Editor de documentos con IA\n- Investigación verificada\n- Portal para clientes\n- Almacenamiento organizado\n- Plantillas por estado",
-        "question": "¿Estarías interesado en probar esta herramienta?",
+        "question": "¿Nos das una oportunidad?",
         "options": [
           { "value": "si", "label": "Sí" },
           { "value": "tal_vez", "label": "Tal vez" },
