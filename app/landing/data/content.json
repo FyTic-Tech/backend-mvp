@@ -294,12 +294,12 @@
         ]
       },
       "problematic": {
-        "question": "¿Cuál es el mayor problema o frustración en tu trabajo diario?",
+        "question": "¿Cuál tu mayor frustración en tu trabajo diario?",
         "placeholder": "Describe tu mayor problema",
         "error": "Ingresa una descripción"
       },
       "tools": {
-        "question": "¿Usa alguna App/Página/Software para su trabajo? [¿Cuáles?]",
+        "question": "¿Usas alguna App/Página/Software para tu trabajo? [¿Cuáles?]",
         "placeholder": "Describe las herramientas que usas actualmente...",
         "error": "Ingresa una descripción"
       },
@@ -315,7 +315,7 @@
       "fytic_question": {
         "question_title": "6 herramientas · Un solo lugar",
         "description": "- Calendario de actividades\n- Editor de documentos con IA\n- Investigación jurídica verificada\n- Portal de seguimiento para clientes\n- Almacenamiento legal organizado\n- Plantillas verificadas por estado",
-        "question": "Así resolvemos todo eso.",
+        "question": "Esto es FyTic.",
         "options": [
           { "value": "si", "label": "Me interesa" },
           { "value": "tal_vez", "label": "Quizás" },
