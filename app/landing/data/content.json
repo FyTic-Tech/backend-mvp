@@ -289,6 +289,7 @@
           { "value": "laboral", "label": "Laboral" },
           { "value": "fiscal", "label": "Fiscal" },
           { "value": "corporativo", "label": "Corporativo" },
+          { "value": "administrativo", "label": "Administrativo" },
           { "value": "otro", "label": "Otro" }
         ]
       },
@@ -298,7 +299,7 @@
         "error": "Ingresa una descripción"
       },
       "tools": {
-        "question": "¿Usas algún software o herramienta para apoyar su trabajo? [¿Cuáles?]",
+        "question": "¿Usa alguna App/Página/Software para su trabajo? [¿Cuáles?]",
         "placeholder": "Describe las herramientas que usas actualmente...",
         "error": "Ingresa una descripción"
       },
@@ -306,19 +307,19 @@
         "question": "¿Qué tanto crees que aún podrían mejorar?",
         "options": [
           { "value": "mucho", "label": "Mucho" },
-          { "value": "bastante", "label": "Bastante" },
           { "value": "regular", "label": "Regular" },
-          { "value": "poco", "label": "Poco" }
+          { "value": "poco", "label": "Poco" },
+          { "value": "nada", "label": "Nada" }
         ]
       },
       "fytic_question": {
         "question_title": "6 herramientas · Un solo lugar",
-        "description": "- Calendario de actividades\n- Editor de documentos con IA\n- Investigación verificada\n- Portal para clientes\n- Almacenamiento organizado\n- Plantillas por estado",
-        "question": "¿Nos das una oportunidad?",
+        "description": "- Calendario de actividades\n- Editor de documentos con IA\n- Investigación jurídica verificada\n- Portal de seguimiento para clientes\n- Almacenamiento legal organizado\n- Plantillas verificadas por estado",
+        "question": "Así resolvemos todo eso.",
         "options": [
-          { "value": "si", "label": "Sí" },
-          { "value": "tal_vez", "label": "Tal vez" },
-          { "value": "no", "label": "No" }
+          { "value": "si", "label": "Me interesa" },
+          { "value": "tal_vez", "label": "Quizás" },
+          { "value": "no", "label": "No por ahora" }
         ]
       },
       "ai_question": {
