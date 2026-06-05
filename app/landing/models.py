@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 from pydantic import BaseModel, field_validator
 
 _EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
@@ -63,3 +64,30 @@ class ClientsResponse(BaseModel):
 
 class OkResponse(BaseModel):
     ok: bool
+
+
+class WaitlistPostResponse(BaseModel):
+    ok: bool
+    id: str
+
+
+class WaitlistEntryUpdate(BaseModel):
+    role: Optional[str] = None
+    area: Optional[str] = None
+    problematic: Optional[str] = None
+    tools: Optional[str] = None
+    process: Optional[str] = None
+    ai_question: Optional[str] = None
+    fytic_question: Optional[str] = None
+    name: Optional[str] = None
+    email: Optional[str] = None
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, v: Optional[str]) -> Optional[str]:
+        if not v:
+            return None
+        v = str(v).strip().lower()
+        if not _EMAIL_RE.match(v):
+            raise ValueError("invalid email format")
+        return v

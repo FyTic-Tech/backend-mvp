@@ -5,7 +5,10 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException
 
 from app.db import get_db
-from .models import ClientsResponse, ContactCreate, OkResponse, WaitlistEntryCreate, WaitlistStatusResponse
+from .models import (
+    ClientsResponse, ContactCreate, OkResponse,
+    WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
+)
 
 router = APIRouter()
 _DATA = Path(__file__).parent / "data"
@@ -37,18 +40,36 @@ def get_waitlist_status() -> WaitlistStatusResponse:
     return {"active": config["active"] if config else True, "count": count}
 
 
-@router.post("/waitlist", status_code=201, response_model=OkResponse)
-def submit_waitlist(entry: WaitlistEntryCreate) -> OkResponse:
+@router.post("/waitlist", status_code=201, response_model=WaitlistPostResponse)
+def submit_waitlist(entry: WaitlistEntryCreate) -> WaitlistPostResponse:
     db = get_db()
     config = db.table("waitlist").select("active").eq("id", "_config").single().execute()
     if not config.data["active"]:
         raise HTTPException(status_code=403, detail="waitlist is closed")
     record = entry.model_dump()
     record["submitted_at"] = datetime.now(timezone.utc).isoformat()
-    # Use select() so PostgREST returns the inserted row — confirms the write landed.
     result = db.table("waitlist").insert(record).select().execute()
     if not result.data:
         raise HTTPException(status_code=500, detail="waitlist insert failed")
+    return {"ok": True, "id": result.data[0]["id"]}
+
+
+@router.patch("/waitlist/{entry_id}", status_code=200, response_model=OkResponse)
+def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
+    db = get_db()
+    updates = entry.model_dump(exclude_none=True)
+    if not updates:
+        return {"ok": True}
+    result = (
+        db.table("waitlist")
+        .update(updates)
+        .eq("id", entry_id)
+        .neq("id", "_config")
+        .select()
+        .execute()
+    )
+    if not result.data:
+        raise HTTPException(status_code=404, detail="entry not found")
     return {"ok": True}
 
 

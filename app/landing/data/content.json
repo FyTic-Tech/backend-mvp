@@ -314,8 +314,8 @@
       },
       "fytic_question": {
         "question_title": "¿Usarías FyTic? Software jurídico para despachos mexicanos.",
-        "description": "El primer software jurídico integral para despachos mexicanos. Investiga, redacta, gestiona casos y comunica con tus clientes — todo en un solo sistema.",
-        "features": "- Calendario de actividades\n- Editor de documentos con IA\n- Investigación jurídica verificada\n- Portal de seguimiento para clientes\n- Almacenamiento legal organizado\n- Plantillas verificadas por estado",
+        "description": "El primer software para despachos mexicanos, todo en un solo sistema.",
+        "features": "- Investigación jurídica verificada\n- Portal de seguimiento para clientes\n- Almacenamiento de documentos\n- Plantillas para documentos jurídicos\n- Calendario de actividades\n- Escribe documentos con IA",
         "question": "¿Estarías interesado?",
         "options": [
           { "value": "si", "label": "Me interesa" },
