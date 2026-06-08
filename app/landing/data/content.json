@@ -402,31 +402,31 @@
     "deckUrl": "",
     "deckDownload": "Descargar deck",
     "stats": [
-      { "value": "$500B+", "label": "Mercado legal en LATAM" },
-      { "value": "2M+", "label": "Abogados en México" },
-      { "value": "85%", "label": "Operan con procesos manuales" },
-      { "value": "Pre-seed", "label": "Etapa actual" }
+      { "value": "$11.06B", "label": "TAM — Mercado global de IA legal" },
+      { "value": "$886M", "label": "SAM — México y LATAM" },
+      { "value": "$199M", "label": "SOM — Objetivo alcanzable" },
+      { "value": "2x", "label": "Más barato que alternativas" }
     ],
     "sections": [
       {
-        "eyebrow": "El problema",
-        "title": "Los abogados trabajan como en 1990",
-        "body": "La mayoría de los despachos en México opera con Word, WhatsApp y hojas de cálculo. El resultado son horas perdidas, errores evitables y clientes insatisfechos."
+        "eyebrow": "El producto",
+        "title": "Investigación verificable, rápida y 2x más barata",
+        "body": "Herramienta de investigación especializada para despachos de pequeña y mediana escala. A diferencia de soluciones genéricas, FyTic está construida sobre derecho mexicano real — sin alucinaciones, con resultados trazables y a la mitad del costo."
       },
       {
-        "eyebrow": "La solución",
-        "title": "Una plataforma. Todo integrado.",
-        "body": "FyTic unifica investigación jurídica con IA, redacción asistida, gestión de casos y portal de clientes en un solo sistema diseñado para el mercado mexicano."
+        "eyebrow": "El problema",
+        "title": "6+ horas diarias en tareas administrativas",
+        "body": "Los abogados en México destinan más de seis horas al día a tareas no facturables. Las herramientas legales actuales alucinan, cuestan más de $15,000 USD al año y no fueron construidas para el marco jurídico mexicano. FyTic lo resuelve."
+      },
+      {
+        "eyebrow": "El mercado",
+        "title": "TAM $11.06B · SAM $886M · SOM $199M",
+        "body": "El mercado global de software de IA legal supera los $11 mil millones de dólares. México y LATAM representan un mercado servible de $886M, con un objetivo alcanzable de $199M en el corto plazo. (Fuente: Research and Markets)"
       },
       {
         "eyebrow": "Tracción",
-        "title": "Demanda desde el día uno",
-        "body": "Lista de espera activa con crecimiento orgánico. Decenas de abogados y despachos esperando acceso beta. Validación del problema en múltiples entrevistas de descubrimiento."
-      },
-      {
-        "eyebrow": "El equipo",
-        "title": "Construido por quienes conocen el mercado",
-        "body": "Equipo fundador con perfil en derecho, tecnología y finanzas. Respaldados por la incubadora del Tec de Monterrey con reconocimientos en desarrollo tecnológico."
+        "title": "Del prototipo al mercado en tiempo récord",
+        "body": "Prototipo temprano terminado y validado por 5+ abogados. Retroalimentación activa con 15+ entrevistas a profesionales del derecho. Producto desplegado: sitio web en producción, lista de espera activa y MVP en desarrollo continuo."
       }
     ]
   }
