@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.db import get_db
 from .models import (
-    ClientsResponse, ContactCreate, OkResponse,
+    ClientsResponse, ContactCreate, InvestorCreate, OkResponse,
     WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
 )
 
@@ -70,6 +70,17 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     )
     if not result.data:
         raise HTTPException(status_code=404, detail="entry not found")
+    return {"ok": True}
+
+
+@router.post("/investors", status_code=201, response_model=OkResponse)
+def submit_investor(investor: InvestorCreate) -> OkResponse:
+    db = get_db()
+    record = investor.model_dump()
+    record["submitted_at"] = datetime.now(timezone.utc).isoformat()
+    result = db.table("investors").insert(record).select().execute()
+    if not result.data:
+        raise HTTPException(status_code=500, detail="investor insert failed")
     return {"ok": True}
 
 

@@ -19,6 +19,7 @@
     "contact": "Contacto",
     "waitlist": "Acceso anticipado",
     "demo": "Unirme",
+    "investors": "Inversores",
     "closeMenu": "Cerrar menú",
     "openMenu": "Abrir menú"
   },
@@ -382,5 +383,51 @@
       "bio": "Ex-intern en KPMG y socio en negocios de manufactura locales. Opera a la vanguardia de las necesidades de la industria con foco en inversión y estructuración financiera del startup.",
       "tag": "Finanzas & Estrategia"
     }
-  ]
+  ],
+  "inversores": {
+    "eyebrow": "Oportunidad de inversión",
+    "title": "Construye el futuro del derecho con nosotros",
+    "body": "Estamos levantando capital para llevar FyTic al mercado. Buscamos inversores que compartan nuestra visión de modernizar la práctica legal en México y LATAM.",
+    "formTitle": "Mantente informado",
+    "formBody": "Déjanos tus datos y te enviaremos actualizaciones de nuestra ronda.",
+    "namePlaceholder": "Tu nombre",
+    "nameError": "Ingresa tu nombre",
+    "emailPlaceholder": "tu@correo.com",
+    "emailError": "Correo inválido",
+    "submitButton": "Quiero saber más",
+    "successMessage": "¡Gracias! Estaremos en contacto pronto.",
+    "deckEyebrow": "Deck para inversores",
+    "deckTitle": "Nuestra presentación",
+    "deckBody": "Todo lo que necesitas saber sobre el mercado, el producto y el equipo.",
+    "deckUrl": "",
+    "deckDownload": "Descargar deck",
+    "stats": [
+      { "value": "$500B+", "label": "Mercado legal en LATAM" },
+      { "value": "2M+", "label": "Abogados en México" },
+      { "value": "85%", "label": "Operan con procesos manuales" },
+      { "value": "Pre-seed", "label": "Etapa actual" }
+    ],
+    "sections": [
+      {
+        "eyebrow": "El problema",
+        "title": "Los abogados trabajan como en 1990",
+        "body": "La mayoría de los despachos en México opera con Word, WhatsApp y hojas de cálculo. El resultado son horas perdidas, errores evitables y clientes insatisfechos."
+      },
+      {
+        "eyebrow": "La solución",
+        "title": "Una plataforma. Todo integrado.",
+        "body": "FyTic unifica investigación jurídica con IA, redacción asistida, gestión de casos y portal de clientes en un solo sistema diseñado para el mercado mexicano."
+      },
+      {
+        "eyebrow": "Tracción",
+        "title": "Demanda desde el día uno",
+        "body": "Lista de espera activa con crecimiento orgánico. Decenas de abogados y despachos esperando acceso beta. Validación del problema en múltiples entrevistas de descubrimiento."
+      },
+      {
+        "eyebrow": "El equipo",
+        "title": "Construido por quienes conocen el mercado",
+        "body": "Equipo fundador con perfil en derecho, tecnología y finanzas. Respaldados por la incubadora del Tec de Monterrey con reconocimientos en desarrollo tecnológico."
+      }
+    ]
+  }
 }

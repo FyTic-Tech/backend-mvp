@@ -71,6 +71,27 @@ class WaitlistPostResponse(BaseModel):
     id: str
 
 
+class InvestorCreate(BaseModel):
+    name: str
+    email: str
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def strip_name(cls, v: str) -> str:
+        v = str(v).strip()
+        if not v:
+            raise ValueError("name is required")
+        return v
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, v: str) -> str:
+        v = str(v).strip().lower()
+        if not _EMAIL_RE.match(v):
+            raise ValueError("invalid email format")
+        return v
+
+
 class WaitlistEntryUpdate(BaseModel):
     role: Optional[str] = None
     area: Optional[str] = None

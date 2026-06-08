@@ -23,8 +23,8 @@ backend-mvp/
     ├── config.py            # Pydantic-settings (reads .env)
     │
     ├── landing/             # Landing-page API — self-contained, keep it simple
-    │   ├── models.py        # Pydantic I/O models
-    │   ├── router.py        # 5 routes (content, clients, waitlist ×2, contact)
+    │   ├── models.py        # Pydantic I/O models (see Models section below)
+    │   ├── router.py        # 6 routes (content, clients, waitlist GET/POST/PATCH, contact)
     │   └── data/
     │       └── content.json # Full site copy served to frontend (waitlist/clients in Supabase)
     │
@@ -45,16 +45,21 @@ backend-mvp/
 |---|---|---|
 | `GET` | `/api/content` | Full `SiteContent` JSON (all site copy) |
 | `GET` | `/api/clients` | `{ visible, clients[] }` — controls carousel section |
-| `GET` | `/api/waitlist` | `{ active }` — controls form vs closed-state |
-| `POST` | `/api/waitlist` | Submit entry `{ name, email, role, position, caseload }` |
+| `GET` | `/api/waitlist` | `{ active, count }` — form vs closed-state + submission count |
+| `POST` | `/api/waitlist` | Submit survey entry (all fields optional); returns `{ ok, id }` |
+| `PATCH` | `/api/waitlist/{id}` | Update specific fields of an existing entry; all body fields optional |
 | `POST` | `/api/contact` | Submit contact form `{ name, firm, email, message }` |
 
-### Toggle behaviour via data files
+### Models (`app/landing/models.py`)
 
-| File | Key | Effect |
-|---|---|---|
-| `app/landing/data/clients.json` | `"visible": false` | Hides the entire clients carousel |
-| `app/landing/data/waitlist.json` | `"active": false` | Shows "waitlist closed" view instead of form |
+| Model | Purpose |
+|---|---|
+| `WaitlistEntryCreate` | POST body — all fields `str = ""` (name/email optional for declined entries) |
+| `WaitlistEntryUpdate` | PATCH body — all fields `Optional[str] = None`; only non-null fields update the row |
+| `WaitlistPostResponse` | POST response — `{ ok: bool, id: str }` — ID used by frontend for PATCH |
+| `WaitlistStatusResponse` | GET response — `{ active: bool, count: int }` |
+| `OkResponse` | Generic `{ ok: bool }` for PATCH/contact |
+| `ContactCreate` | POST /api/contact body — all fields required, email validated |
 
 ---
 
