@@ -27,10 +27,10 @@
     "edition": "SCJN · DOF · Códigos",
     "whisper": "Múltiples Clientes",
     "brand": "Mexicana",
-    "headline1": "Primera",
-    "headlineEm": "IA jurídica",
-    "headline2": "100% confiable",
-    "body": "Creada para abogados que exigen precisión y trazabilidad en cada hallazgo. Tecnología hiperespecializada para superar capacidades genéricas de OpenAI, Harvey y Claude."
+    "headline1": "Investigación",
+    "headlineEm": "jurídica",
+    "headline2": "para México",
+    "body": "Herramienta para despachos mexicanos: investiga jurisprudencia verificada, redacta escritos y gestiona expedientes. Cada hallazgo con fuente y número de tesis."
   },
   "suck": {
     "title": "FyTic",
@@ -181,7 +181,7 @@
     "eyebrow": "Sobre FyTic",
     "headline1": "Tecnología que",
     "headlineEm": "piensa como jurista.",
-    "body": "No como ingeniero.",
+    "body": "",
     "missionEyebrow": "Nuestra misión",
     "missionTitle": "La primera IA jurídica construida 100% desde la perspectiva del abogado, sin importar la tecnología que eso requiera desarrollar.",
     "missionP1": "Las investigaciones se ganan o se pierden en los detalles. Pero la mayoría de los equipos legales todavía las arman con hojas de cálculo, drives compartidos y memoria.",
@@ -191,7 +191,7 @@
       {
         "k": "01",
         "t": "Perspectiva 100% legal",
-        "d": "Avalado por despachos mexicanos. Construimos desde adentro, no desde lo que un ingeniero imagina que un abogado necesita."
+        "d": "Avalado por despachos mexicanos. Construimos desde adentro, con validación directa de abogados en ejercicio."
       },
       {
         "k": "02",
@@ -204,7 +204,7 @@
         "d": "Desarrollamos AI, NLP y embeddings revolucionarios para el derecho mexicano y seguiremos buscando funding para seguir incorporando expertos con PhD en IA."
       }
     ],
-    "closing1": "Hecho en Monterrey.",
+    "closing1": "Hecho en Monterrey y CDMX.",
     "closingEm": "Para el mundo legal.",
     "gallery": {
       "eyebrow": "Detrás del despacho",
@@ -214,13 +214,13 @@
   },
   "product": {
     "eyebrow": "El producto",
-    "headline1": "El único software",
+    "headline1": "Software",
     "headlineEm": "hecho para despachos mexicanos.",
     "body": "Un sistema completo para el despacho de litigio: investigación verificada, redacción, gestión de casos y comunicación con clientes. Todo en un solo lugar, sin cambiar de herramienta.",
     "howEyebrow": "Siete funcionalidades",
     "howTitle1": "Construido para el flujo completo",
     "howTitleEm": "de tu despacho.",
-    "ctaTitle": "Ve a FyTic operando sobre un caso real.",
+    "ctaTitle": "FyTic operando sobre un caso real.",
     "ctaButton": "Solicitar acceso anticipado",
     "gallery": {
       "eyebrow": "La plataforma en uso",
@@ -314,7 +314,7 @@
         ]
       },
       "fytic_question": {
-        "question_title": "¿Usarías FyTic? Software jurídico para despachos mexicanos.",
+        "question_title": "Acceso anticipado a FyTic",
         "description": "El primer software para despachos mexicanos, todo en un solo sistema.",
         "features": "- Investigación jurídica verificada\n- Portal de seguimiento para clientes\n- Almacenamiento de documentos\n- Plantillas para documentos jurídicos\n- Calendario de actividades\n- Escribe documentos con IA",
         "question": "¿Estarías interesado?",
@@ -364,24 +364,24 @@
   "founders": [
     {
       "name": "Luis Delgadillo",
-      "role": "CEO",
-      "area": "Ciencias Computacionales",
-      "bio": "Ex-intern de IA en General Motors y ex-Data Engineer en una startup. Desarrolló un sistema de gestión de riesgos con IA para la Marina de México. Ha colaborado con BOCAR, Cesvi, MIT, Databricks y Banamex; los últimos tres en hackathones. Especializado en IA de vanguardia.",
-      "tag": "Ingeniería & IA"
+      "role": "CEO & Cofounder",
+      "area": "IA y Software",
+      "bio": "Ex-intern en General Motors. Data Engineering en startup. IA y desarrollo de software.",
+      "tag": "IA & Software"
     },
     {
-      "name": "María Elena Torres",
-      "role": "CPO",
-      "area": "Derecho",
-      "bio": "Estudiante de Derecho y becaria en despacho jurídico. Destaca por sus estrategias de investigación y argumentación. Construye FyTic desde la perspectiva 100% del abogado: cada flujo responde a una necesidad real del litigio.",
-      "tag": "Legal & Producto"
+      "name": "Mariel Torres",
+      "role": "CPO & Cofounder",
+      "area": "Producto Legal",
+      "bio": "Becaria en despacho jurídico. Diseño de producto y visión del usuario legal.",
+      "tag": "Producto & Legal"
     },
     {
       "name": "Víctor Fernández",
-      "role": "CFO",
+      "role": "CFO & Cofounder",
       "area": "Finanzas",
-      "bio": "Ex-intern en KPMG y socio en negocios de manufactura locales. Opera a la vanguardia de las necesidades de la industria con foco en inversión y estructuración financiera del startup.",
-      "tag": "Finanzas & Estrategia"
+      "bio": "Ex-intern en KPMG. Equity partner en manufactura. Finanzas y estructuración.",
+      "tag": "Finanzas"
     }
   ],
   "inversores": {
@@ -411,22 +411,22 @@
       {
         "eyebrow": "El producto",
         "title": "Investigación verificable, rápida y 2x más barata",
-        "body": "Herramienta de investigación especializada para despachos de pequeña y mediana escala. A diferencia de soluciones genéricas, FyTic está construida sobre derecho mexicano real — sin alucinaciones, con resultados trazables y a la mitad del costo."
+        "body": "FyTic está construida sobre derecho mexicano real: sin alucinaciones, con resultados trazables y a la mitad del costo de soluciones genéricas."
       },
       {
         "eyebrow": "El problema",
         "title": "6+ horas diarias en tareas administrativas",
-        "body": "Los abogados en México destinan más de seis horas al día a tareas no facturables. Las herramientas legales actuales alucinan, cuestan más de $15,000 USD al año y no fueron construidas para el marco jurídico mexicano. FyTic lo resuelve."
+        "body": "Los abogados en México destinan más de seis horas al día a tareas no facturables. Las herramientas legales actuales alucinan y cuestan más de $15,000 USD al año sin adaptarse al marco jurídico mexicano."
       },
       {
         "eyebrow": "El mercado",
         "title": "TAM $11.06B · SAM $886M · SOM $199M",
-        "body": "El mercado global de software de IA legal supera los $11 mil millones de dólares. México y LATAM representan un mercado servible de $886M, con un objetivo alcanzable de $199M en el corto plazo. (Fuente: Research and Markets)"
+        "body": "El mercado global de software de IA legal supera los $11 mil millones. México y LATAM representan $886M de mercado servible. (Fuente: Research and Markets)"
       },
       {
         "eyebrow": "Tracción",
         "title": "Del prototipo al mercado en tiempo récord",
-        "body": "Prototipo temprano terminado y validado por 5+ abogados. Retroalimentación activa con 15+ entrevistas a profesionales del derecho. Producto desplegado: sitio web en producción, lista de espera activa y MVP en desarrollo continuo."
+        "body": "Prototipo validado con 15+ abogados. Sitio en producción, lista de espera activa y MVP en desarrollo continuo."
       }
     ]
   }
