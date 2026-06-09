@@ -1,9 +1,9 @@
 {
   "seo": {
-    "title": "FyTic — IA jurídica para despachos legales",
+    "title": "FyTic | IA jurídica para despachos legales",
     "description": "El primer sistema de inteligencia artificial jurídica para abogados en México y LATAM. Investiga, organiza y argumenta con evidencia siempre trazable.",
     "author": "FyTic",
-    "ogTitle": "FyTic — Inteligencia para investigaciones legales",
+    "ogTitle": "FyTic | Inteligencia para investigaciones legales",
     "ogDescription": "Software para despachos que se niegan a perder evidencia. Investigación potenciada de raíz.",
     "twitterSite": "@fytic_mx"
   },
@@ -28,7 +28,7 @@
     "whisper": "Múltiples Clientes",
     "brand": "Mexicana",
     "headline1": "Investigación",
-    "headlineEm": "jurídica",
+    "headlineEm": "jurídica ",
     "headline2": "para México",
     "body": "Herramienta para despachos mexicanos: investiga jurisprudencia verificada, redacta escritos y gestiona expedientes. Cada hallazgo con fuente y número de tesis."
   },
@@ -69,7 +69,7 @@
       "tag": "Document Editor",
       "title": "Editor con IA en contexto",
       "teaser": "Tu despacho. Tu voz.",
-      "body": "Editor de documentos completo dentro de la plataforma — equivalente a Word o Google Docs — con una barra lateral de IA que tiene contexto total del caso activo: expediente, cliente, jurisprudencia relevante y el estilo de escritura del abogado.",
+      "body": "Editor de documentos completo dentro de la plataforma (equivalente a Word o Google Docs) con una barra lateral de IA que tiene contexto total del caso activo: expediente, cliente, jurisprudencia relevante y el estilo de escritura del abogado.",
       "meta": "Funcionalidad 02",
       "imageKey": "docEditor"
     },
@@ -87,7 +87,7 @@
       "tag": "Plantillas",
       "title": "Plantillas verificadas por estado",
       "teaser": "Se adaptan a tu despacho con el tiempo.",
-      "body": "Plantillas jurídicas verificadas para demanda, contestación, amparo y recurso administrativo — por estado de la República Mexicana. El output no suena a template. Suena a ese abogado.",
+      "body": "Plantillas jurídicas verificadas para demanda, contestación, amparo y recurso administrativo (por estado de la República Mexicana). El output no suena a template. Suena a ese abogado.",
       "meta": "Funcionalidad 04",
       "imageKey": "plantillas"
     },
@@ -366,27 +366,27 @@
       "name": "Luis Delgadillo",
       "role": "CEO & Cofounder",
       "area": "IA y Software",
-      "bio": "Ex-intern en General Motors. Data Engineering en startup. IA y desarrollo de software.",
+      "bio": "Trabajó en General Motors & una startup. IA y desarrollo de software.",
       "tag": "IA & Software"
     },
     {
       "name": "Mariel Torres",
       "role": "CPO & Cofounder",
       "area": "Producto Legal",
-      "bio": "Becaria en despacho jurídico. Diseño de producto y visión del usuario legal.",
+      "bio": "Experiencia en despacho jurídico. Diseño de producto y visión del usuario legal.",
       "tag": "Producto & Legal"
     },
     {
       "name": "Víctor Fernández",
       "role": "CFO & Cofounder",
       "area": "Finanzas",
-      "bio": "Ex-intern en KPMG. Equity partner en manufactura. Finanzas y estructuración.",
+      "bio": "Trayectoria en KPMG & equity partner en manufactura. Finanzas y estructuración.",
       "tag": "Finanzas"
     }
   ],
   "inversores": {
     "eyebrow": "News Letter para Inversores",
-    "title": "Sigue el avance de FyTic",
+    "title": "Sigue de cerca el avance de FyTic",
     "body": "Buscamos ángeles inversores que compartan nuestra visión de cambiar la práctica legal en México y LATAM.",
     "formTitle": "Mantente informado",
     "formBody": "Únete a la newsletter para recibir actualizaciones cada 3 semanas.",
@@ -426,7 +426,7 @@
       {
         "eyebrow": "Tracción",
         "title": "Del prototipo al mercado en tiempo récord",
-        "body": "Prototipo validado con 15+ abogados. Sitio en producción, lista de espera activa y MVP en desarrollo continuo."
+        "body": "Prototipo validado con abogados. Sitio web, lista de espera activa y MVP en desarrollo continuo."
       }
     ]
   }
