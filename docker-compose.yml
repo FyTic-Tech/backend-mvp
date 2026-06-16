@@ -1,0 +1,12 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: fytic_saas_db
+    environment:
+      POSTGRES_USER: fytic
+      POSTGRES_PASSWORD: fytic
+      POSTGRES_DB: fytic_saas
+    ports: ["5432:5432"]
+    volumes: ["fytic_pgdata:/var/lib/postgresql/data"]
+volumes:
+  fytic_pgdata:
