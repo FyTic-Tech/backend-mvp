@@ -170,6 +170,11 @@ class TestUploadFile:
         assert r.status_code == 201
         assert r.json()["parentId"] == folder_id
 
+    def test_subir_en_carpeta_de_otro_cliente_devuelve_400(self, client, seeded_clients):
+        folder_id = make_folder(client, client_slug="garcia-vargas-s-a").json()["id"]
+        r = upload_pdf(client, slug="mendoza-asociados", parent_id=folder_id)
+        assert r.status_code == 400
+
     def test_archivo_como_padre_devuelve_400(self, client, seeded_clients):
         file_id = upload_pdf(client).json()["id"]
         r = upload_pdf(client, filename="doc2.pdf", parent_id=file_id)
@@ -228,6 +233,24 @@ class TestCreateFolder:
         assert r.status_code == 201
         assert r.json()["clientId"] is None
 
+    def test_carpeta_anidada_infiere_cliente_del_padre(self, client, seeded_clients):
+        parent = make_folder(client, name="Contratos").json()
+        r = client.post("/api/app/files", json={
+            "name": "Arrendamiento",
+            "parentId": parent["id"],
+        })
+        assert r.status_code == 201
+        assert r.json()["clientId"] == parent["clientId"]
+
+    def test_carpeta_con_cliente_distinto_al_padre_devuelve_400(self, client, seeded_clients):
+        parent = make_folder(client, name="Contratos", client_slug="mendoza-asociados").json()
+        r = client.post("/api/app/files", json={
+            "name": "Fiscal",
+            "clientSlug": "garcia-vargas-s-a",
+            "parentId": parent["id"],
+        })
+        assert r.status_code == 400
+
     def test_carpeta_con_cliente_desconocido_devuelve_404(self, client, seeded_clients):
         r = client.post("/api/app/files", json={
             "name": "Carpeta",
@@ -259,6 +282,51 @@ class TestUpdateFile:
         r = client.patch(f"/api/app/files/{file_id}", json={"parentId": folder_id})
         assert r.status_code == 200
         assert r.json()["parentId"] == folder_id
+
+    def test_mover_archivo_a_raiz_del_despacho(self, client, seeded_clients):
+        folder_id = make_folder(client).json()["id"]
+        file_id = upload_pdf(client, parent_id=folder_id).json()["id"]
+        r = client.patch(f"/api/app/files/{file_id}", json={"parentId": None})
+        assert r.status_code == 200
+        assert r.json()["parentId"] is None
+        assert r.json()["clientId"] is None
+
+    def test_mover_archivo_a_raiz_de_otro_cliente(self, client, seeded_clients):
+        file_id = upload_pdf(client, slug="mendoza-asociados").json()["id"]
+        target_client_id = next(c.id for c in seeded_clients if c.slug == "garcia-vargas-s-a")
+        r = client.patch(f"/api/app/files/{file_id}", json={
+            "parentId": None,
+            "clientSlug": "garcia-vargas-s-a",
+        })
+        assert r.status_code == 200
+        assert r.json()["parentId"] is None
+        assert r.json()["clientId"] == str(target_client_id)
+
+    def test_mover_archivo_a_carpeta_de_otro_cliente_reasigna_cliente(self, client, seeded_clients):
+        file_id = upload_pdf(client, slug="mendoza-asociados").json()["id"]
+        target_folder = make_folder(client, client_slug="garcia-vargas-s-a").json()
+        r = client.patch(f"/api/app/files/{file_id}", json={"parentId": target_folder["id"]})
+        assert r.status_code == 200
+        assert r.json()["parentId"] == target_folder["id"]
+        assert r.json()["clientId"] == target_folder["clientId"]
+
+    def test_mover_carpeta_a_otro_cliente_reasigna_descendientes(self, client, seeded_clients):
+        folder = make_folder(client, name="Contratos", client_slug="mendoza-asociados").json()
+        file_id = upload_pdf(client, slug="mendoza-asociados", parent_id=folder["id"]).json()["id"]
+        target = make_folder(client, name="Fiscal", client_slug="garcia-vargas-s-a").json()
+
+        r = client.patch(f"/api/app/files/{folder['id']}", json={"parentId": target["id"]})
+        assert r.status_code == 200
+        assert r.json()["clientId"] == target["clientId"]
+
+        moved_file = next(item for item in client.get("/api/app/files").json() if item["id"] == file_id)
+        assert moved_file["clientId"] == target["clientId"]
+
+    def test_no_permite_mover_carpeta_a_su_descendiente(self, client, seeded_clients):
+        parent_id = make_folder(client, name="Contratos").json()["id"]
+        child_id = make_folder(client, name="Sub", parent_id=parent_id).json()["id"]
+        r = client.patch(f"/api/app/files/{parent_id}", json={"parentId": child_id})
+        assert r.status_code == 400
 
     def test_mover_a_carpeta_inexistente_devuelve_404(self, client, seeded_clients):
         file_id = upload_pdf(client).json()["id"]

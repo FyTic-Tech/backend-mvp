@@ -23,7 +23,7 @@ MIME_MAP = {
 }
 
 
-def _validate_parent(parent_id: str | None, session: Session) -> uuid.UUID | None:
+def _validate_parent(parent_id: str | None, session: Session) -> FileRow | None:
     if not parent_id:
         return None
     pid = uuid.UUID(parent_id)
@@ -32,7 +32,7 @@ def _validate_parent(parent_id: str | None, session: Session) -> uuid.UUID | Non
         raise HTTPException(404, "parent folder not found")
     if parent.type != "folder":
         raise HTTPException(400, "parent must be a folder, not a file")
-    return pid
+    return parent
 
 
 def _resolve_client(slug: str, session: Session) -> FirmClient:
@@ -44,6 +44,51 @@ def _resolve_client(slug: str, session: Session) -> FirmClient:
     if not client:
         raise HTTPException(404, f"client '{slug}' not found")
     return client
+
+
+def _ensure_parent_matches_client(parent: FileRow | None, client_id: uuid.UUID) -> None:
+    if parent and parent.client_id != client_id:
+        raise HTTPException(400, "parent folder belongs to a different client")
+
+
+def _resolve_folder_client_id(
+    parent: FileRow | None,
+    client_slug: str | None,
+    session: Session,
+) -> uuid.UUID | None:
+    client_id = _resolve_client(client_slug, session).id if client_slug else None
+    if parent:
+        if client_id and parent.client_id != client_id:
+            raise HTTPException(400, "parent folder belongs to a different client")
+        return parent.client_id
+    return client_id
+
+
+def _is_descendant(candidate_id: uuid.UUID, folder_id: uuid.UUID, session: Session) -> bool:
+    current = session.get(FileRow, candidate_id)
+    while current and current.parent_id:
+        if current.parent_id == folder_id:
+            return True
+        current = session.get(FileRow, current.parent_id)
+    return False
+
+
+def _set_subtree_client_id(
+    file_id: uuid.UUID,
+    client_id: uuid.UUID | None,
+    session: Session,
+) -> None:
+    stack = [file_id]
+    while stack:
+        current_id = stack.pop()
+        row = session.get(FileRow, current_id)
+        if not row:
+            continue
+        row.client_id = client_id
+        children = session.scalars(
+            select(FileRow).where(FileRow.parent_id == current_id)
+        ).all()
+        stack.extend(child.id for child in children)
 
 
 @router.get("/files", response_model=list[FileItem])
@@ -67,6 +112,9 @@ def upload_file(
     session: Session = Depends(get_session),
 ):
     client = _resolve_client(slug, session)
+    parent = _validate_parent(parent_id, session)
+    _ensure_parent_matches_client(parent, client.id)
+
     ext = Path(file.filename or "").suffix.lower()
     file_id = uuid.uuid4()
     storage_path = f"{_DEMO_FIRM_ID}/{client.id}/{file_id}{ext}"
@@ -76,7 +124,7 @@ def upload_file(
         id=file_id,
         firm_id=_DEMO_FIRM_ID,
         client_id=client.id,
-        parent_id=_validate_parent(parent_id, session),
+        parent_id=parent.id if parent else None,
         name=file.filename or f"{file_id}{ext}",
         type="file",
         storage_path=storage_path,
@@ -93,15 +141,13 @@ def upload_file(
 
 @router.post("/files", response_model=FileItem, status_code=201)
 def create_folder(body: FolderCreate, session: Session = Depends(get_session)):
-    client_id = None
-    if body.clientSlug:
-        client = _resolve_client(body.clientSlug, session)
-        client_id = client.id
+    parent = _validate_parent(body.parentId, session)
+    client_id = _resolve_folder_client_id(parent, body.clientSlug, session)
 
     row = FileRow(
         firm_id=_DEMO_FIRM_ID,
         client_id=client_id,
-        parent_id=_validate_parent(body.parentId, session),
+        parent_id=parent.id if parent else None,
         name=body.name,
         type="folder",
     )
@@ -122,8 +168,27 @@ def update_file(
         raise HTTPException(404, "file not found")
     if body.name is not None:
         row.name = body.name
-    if body.parentId is not None:
-        row.parent_id = _validate_parent(body.parentId, session)
+
+    if "parentId" in body.model_fields_set:
+        parent = _validate_parent(body.parentId, session)
+        if parent and row.type == "folder" and _is_descendant(parent.id, row.id, session):
+            raise HTTPException(400, "cannot move a folder into its own descendant")
+
+        if parent:
+            if body.clientSlug:
+                client = _resolve_client(body.clientSlug, session)
+                _ensure_parent_matches_client(parent, client.id)
+            next_client_id = parent.client_id
+        elif body.clientSlug:
+            next_client_id = _resolve_client(body.clientSlug, session).id
+        else:
+            next_client_id = None
+
+        row.parent_id = parent.id if parent else None
+        _set_subtree_client_id(row.id, next_client_id, session)
+    elif "clientSlug" in body.model_fields_set:
+        raise HTTPException(400, "clientSlug requires parentId")
+
     session.commit()
     session.refresh(row)
     return to_file_item(row)

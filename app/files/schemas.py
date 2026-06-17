@@ -26,6 +26,7 @@ class FolderCreate(BaseModel):
 class FileUpdate(BaseModel):
     name: Optional[str] = None
     parentId: Optional[str] = None
+    clientSlug: Optional[str] = None
 
 
 def to_file_item(row: FileRow) -> FileItem:
