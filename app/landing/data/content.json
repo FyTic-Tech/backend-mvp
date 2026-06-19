@@ -231,26 +231,70 @@
   "diagram": {
     "hub": "Núcleo FyTic",
     "branches": [
-      { "id": "b1", "label": "Expediente" },
-      { "id": "b2", "label": "Hallazgos" },
-      { "id": "b3", "label": "Escritos" }
+      {
+        "id": "b1",
+        "label": "Expediente"
+      },
+      {
+        "id": "b2",
+        "label": "Hallazgos"
+      },
+      {
+        "id": "b3",
+        "label": "Escritos"
+      }
     ],
     "discarded": [
-      { "id": "d1", "label": "Línea descartada" },
-      { "id": "d2", "label": "Fuera de hipótesis" },
-      { "id": "d3", "label": "No probado" }
+      {
+        "id": "d1",
+        "label": "Línea descartada"
+      },
+      {
+        "id": "d2",
+        "label": "Fuera de hipótesis"
+      },
+      {
+        "id": "d3",
+        "label": "No probado"
+      }
     ],
     "indirect": [
-      { "id": "i1", "label": "Vínculo oculto" },
-      { "id": "i2", "label": "Referencia cruzada" },
-      { "id": "i3", "label": "Nuevo testigo" },
-      { "id": "i4", "label": "Anomalía" }
+      {
+        "id": "i1",
+        "label": "Vínculo oculto"
+      },
+      {
+        "id": "i2",
+        "label": "Referencia cruzada"
+      },
+      {
+        "id": "i3",
+        "label": "Nuevo testigo"
+      },
+      {
+        "id": "i4",
+        "label": "Anomalía"
+      }
     ],
     "captionEyebrow": "Caos disperso",
     "captionTitle": "Un solo lugar para darle sentido a todo.",
     "floaters": {
-      "folders": ["Demandas", "Pruebas", "Periciales", "Contratos", "Ofic. judiciales", "Notarial"],
-      "questions": ["¿Quién firmó?", "?", "¿Cuándo ocurrió?", "?", "?", "¿Hay precedente?"]
+      "folders": [
+        "Demandas",
+        "Pruebas",
+        "Periciales",
+        "Contratos",
+        "Ofic. judiciales",
+        "Notarial"
+      ],
+      "questions": [
+        "¿Quién firmó?",
+        "?",
+        "¿Cuándo ocurrió?",
+        "?",
+        "?",
+        "¿Hay precedente?"
+      ]
     }
   },
   "waitlist": {
@@ -274,24 +318,63 @@
       "role": {
         "question": "¿Cómo describes tu práctica legal?",
         "options": [
-          { "value": "despacho", "label": "Despacho o firma legal" },
-          { "value": "independiente", "label": "Abogado independiente" },
-          { "value": "becario", "label": "Estudiante o becario" },
-          { "value": "corporativo", "label": "Área corporativa" },
-          { "value": "otro", "label": "Otro" }
+          {
+            "value": "despacho",
+            "label": "Despacho o firma legal"
+          },
+          {
+            "value": "independiente",
+            "label": "Abogado independiente"
+          },
+          {
+            "value": "becario",
+            "label": "Estudiante o becario"
+          },
+          {
+            "value": "corporativo",
+            "label": "Área corporativa"
+          },
+          {
+            "value": "otro",
+            "label": "Otro"
+          }
         ]
       },
       "area": {
         "question": "¿En qué área trabajas principalmente?",
         "options": [
-          { "value": "civil", "label": "Civil" },
-          { "value": "mercantil", "label": "Mercantil" },
-          { "value": "penal", "label": "Penal" },
-          { "value": "laboral", "label": "Laboral" },
-          { "value": "fiscal", "label": "Fiscal" },
-          { "value": "corporativo", "label": "Corporativo" },
-          { "value": "administrativo", "label": "Administrativo" },
-          { "value": "otro", "label": "Otro" }
+          {
+            "value": "civil",
+            "label": "Civil"
+          },
+          {
+            "value": "mercantil",
+            "label": "Mercantil"
+          },
+          {
+            "value": "penal",
+            "label": "Penal"
+          },
+          {
+            "value": "laboral",
+            "label": "Laboral"
+          },
+          {
+            "value": "fiscal",
+            "label": "Fiscal"
+          },
+          {
+            "value": "corporativo",
+            "label": "Corporativo"
+          },
+          {
+            "value": "administrativo",
+            "label": "Administrativo"
+          },
+          {
+            "value": "otro",
+            "label": "Otro"
+          }
         ]
       },
       "problematic": {
@@ -307,10 +390,22 @@
       "process": {
         "question": "¿Qué tanto crees que aún podrían mejorar?",
         "options": [
-          { "value": "mucho", "label": "Mucho" },
-          { "value": "regular", "label": "Regular" },
-          { "value": "poco", "label": "Poco" },
-          { "value": "nada", "label": "Nada" }
+          {
+            "value": "mucho",
+            "label": "Mucho"
+          },
+          {
+            "value": "regular",
+            "label": "Regular"
+          },
+          {
+            "value": "poco",
+            "label": "Poco"
+          },
+          {
+            "value": "nada",
+            "label": "Nada"
+          }
         ]
       },
       "fytic_question": {
@@ -319,17 +414,35 @@
         "features": "- Investigación jurídica verificada\n- Portal de seguimiento para clientes\n- Almacenamiento de documentos\n- Plantillas para documentos jurídicos\n- Calendario de actividades\n- Escribe documentos con IA",
         "question": "¿Estarías interesado?",
         "options": [
-          { "value": "si", "label": "Me interesa" },
-          { "value": "tal_vez", "label": "Quizás" },
-          { "value": "no", "label": "No por ahora" }
+          {
+            "value": "si",
+            "label": "Me interesa"
+          },
+          {
+            "value": "tal_vez",
+            "label": "Quizás"
+          },
+          {
+            "value": "no",
+            "label": "No por ahora"
+          }
         ]
       },
       "ai_question": {
         "question": "¿Las IA's hacen lo suficiente para tus necesidades?",
         "options": [
-          { "value": "si", "label": "Sí" },
-          { "value": "podria_mejorar", "label": "Podría Mejorar" },
-          { "value": "no", "label": "No" }
+          {
+            "value": "si",
+            "label": "Sí"
+          },
+          {
+            "value": "podria_mejorar",
+            "label": "Podría Mejorar"
+          },
+          {
+            "value": "no",
+            "label": "No"
+          }
         ]
       },
       "name": {
@@ -382,6 +495,13 @@
       "area": "Finanzas",
       "bio": "Trayectoria en KPMG & equity partner en manufactura. Finanzas y estructuración.",
       "tag": "Finanzas"
+    },
+    {
+      "name": "Óscar Sánchez",
+      "role": "CTO & Cofounder",
+      "area": "Ingeniería",
+      "bio": "Genio del código. Desarrolló sistemas fullstack para una startup de supply chain. Arquitectura de software e inteligencia artificial.",
+      "tag": "Ingeniería"
     }
   ],
   "inversores": {
@@ -402,10 +522,22 @@
     "deckUrl": "",
     "deckDownload": "Descargar deck",
     "stats": [
-      { "value": "$11.06B", "label": "TAM — Mercado global de IA legal" },
-      { "value": "$886M", "label": "SAM — México y LATAM" },
-      { "value": "$199M", "label": "SOM — Objetivo alcanzable" },
-      { "value": "2x", "label": "Más barato que alternativas" }
+      {
+        "value": "$11.06B",
+        "label": "TAM — Mercado global de IA legal"
+      },
+      {
+        "value": "$886M",
+        "label": "SAM — México y LATAM"
+      },
+      {
+        "value": "$199M",
+        "label": "SOM — Objetivo alcanzable"
+      },
+      {
+        "value": "2x",
+        "label": "Más barato que alternativas"
+      }
     ],
     "sections": [
       {
@@ -429,5 +561,18 @@
         "body": "Prototipo validado con abogados. Sitio web, lista de espera activa y MVP en desarrollo continuo."
       }
     ]
-  }
+  },
+  "advisors": [
+    {
+      "name": "José Mondragón",
+      "title": "CS PhD · Semisupervised Multilabel Learning",
+      "bio": "Desarrolló proyectos para marcas como LG, José Cuervo, Sonric's, Matusalem y Pepsi.",
+      "logoKeys": [
+        "lg",
+        "sonrics",
+        "pepsi",
+        "tec"
+      ]
+    }
+  ]
 }
