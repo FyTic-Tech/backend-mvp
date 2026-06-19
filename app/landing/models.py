@@ -93,6 +93,10 @@ class InvestorCreate(BaseModel):
         return v
 
 
+class RefCodeRequest(BaseModel):
+    user_id: str
+
+
 class WaitlistEntryUpdate(BaseModel):
     role: Optional[str] = None
     area: Optional[str] = None

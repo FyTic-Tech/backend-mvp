@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.db import get_db
 from .models import (
-    ClientsResponse, ContactCreate, InvestorCreate, OkResponse,
+    ClientsResponse, ContactCreate, InvestorCreate, OkResponse, RefCodeRequest,
     WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
 )
 
@@ -46,8 +46,23 @@ def submit_waitlist(entry: WaitlistEntryCreate) -> WaitlistPostResponse:
     config = db.table("waitlist").select("active").eq("id", "_config").single().execute()
     if not config.data["active"]:
         raise HTTPException(status_code=403, detail="waitlist is closed")
+
     record = entry.model_dump()
+    user_id = record.get("user_id")
     record["submitted_at"] = datetime.now(timezone.utc).isoformat()
+
+    # UPSERT: if this user_id already has an entry, update it instead of inserting
+    if user_id:
+        existing = (
+            db.table("waitlist").select("id").eq("user_id", user_id).neq("id", "_config").execute()
+        )
+        if existing.data:
+            entry_id = existing.data[0]["id"]
+            updates = {k: v for k, v in record.items() if v not in (None, "")}
+            updates.pop("user_id", None)  # user_id is already correct
+            db.table("waitlist").update(updates).eq("id", entry_id).execute()
+            return {"ok": True, "id": entry_id}
+
     result = db.table("waitlist").insert(record).select().execute()
     if not result.data:
         raise HTTPException(status_code=500, detail="waitlist insert failed")
@@ -71,6 +86,18 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     if not result.data:
         raise HTTPException(status_code=404, detail="entry not found")
     return {"ok": True}
+
+
+@router.post("/profile/ref-code")
+def get_or_create_ref_code(body: RefCodeRequest) -> dict:
+    import hashlib
+    db = get_db()
+    result = db.table("users").select("ref_code").eq("id", body.user_id).execute()
+    if result.data and result.data[0].get("ref_code"):
+        return {"ref_code": result.data[0]["ref_code"]}
+    ref_code = hashlib.md5(body.user_id.encode()).hexdigest()[:8]
+    db.table("users").update({"ref_code": ref_code}).eq("id", body.user_id).execute()
+    return {"ref_code": ref_code}
 
 
 @router.post("/investors", status_code=201, response_model=OkResponse)

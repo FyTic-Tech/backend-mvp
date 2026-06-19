@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     supabase_service_key: str = ""
     resend_api_key: str = ""
     supabase_hook_secret: str = ""
+    supabase_webhook_secret: str = ""
 
     @property
     def is_dev(self) -> bool:
