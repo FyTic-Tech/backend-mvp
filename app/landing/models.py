@@ -14,7 +14,6 @@ class WaitlistEntryCreate(BaseModel):
     tools: str = ""
     process: str = ""
     ai_question: str = ""
-    referred_by: str = ""
     user_id: Optional[str] = None
 
     @field_validator("name", mode="before")
@@ -107,7 +106,6 @@ class WaitlistEntryUpdate(BaseModel):
     fytic_question: Optional[str] = None
     name: Optional[str] = None
     email: Optional[str] = None
-    referred_by: Optional[str] = None
     user_id: Optional[str] = None
 
     @field_validator("email", mode="before")
