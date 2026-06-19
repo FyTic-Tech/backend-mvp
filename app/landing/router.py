@@ -43,8 +43,9 @@ def get_waitlist_status() -> WaitlistStatusResponse:
 @router.post("/waitlist", status_code=201, response_model=WaitlistPostResponse)
 def submit_waitlist(entry: WaitlistEntryCreate) -> WaitlistPostResponse:
     db = get_db()
-    config = db.table("waitlist").select("active").eq("id", "_config").single().execute()
-    if not config.data["active"]:
+    config_rows = db.table("waitlist").select("active").eq("id", "_config").execute()
+    config = config_rows.data[0] if config_rows.data else None
+    if config and not config.get("active", True):
         raise HTTPException(status_code=403, detail="waitlist is closed")
 
     record = entry.model_dump()
