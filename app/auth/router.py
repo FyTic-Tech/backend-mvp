@@ -214,46 +214,50 @@ async def welcome_email_webhook(request: Request) -> JSONResponse:
 
 @router.post("/auth/send-email")
 async def send_email_hook(request: Request) -> JSONResponse:
-    _verify_hook_signature(request)
+    # IMPORTANT: always return 200 — any non-2xx causes Supabase to fail the entire signup
+    try:
+        _verify_hook_signature(request)
 
-    body = await request.json()
-    user       = body.get("user", {})
-    email_data = body.get("email_data", {})
+        body = await request.json()
+        user       = body.get("user", {})
+        email_data = body.get("email_data", {})
 
-    to_email    = user.get("email", "")
-    action_type = email_data.get("email_action_type", "signup")
-    token_hash  = email_data.get("token_hash", "")
-    redirect_to = email_data.get("redirect_to", "")
+        to_email    = user.get("email", "")
+        action_type = email_data.get("email_action_type", "signup")
+        token_hash  = email_data.get("token_hash", "")
+        redirect_to = email_data.get("redirect_to", "")
 
-    template = HOOK_EMAIL_TEMPLATES.get(action_type)
-    if not template or not to_email or not token_hash:
-        return JSONResponse({})
+        template = HOOK_EMAIL_TEMPLATES.get(action_type)
+        if not template or not to_email or not token_hash:
+            return JSONResponse({})
 
-    site_url   = os.environ.get("FRONTEND_URL", "https://fytic.tech")
-    next_path  = redirect_to or f"{site_url}/"
-    token_type = "email" if action_type == "signup" else action_type
-    action_url = (
-        f"{site_url}/auth/callback"
-        f"?token_hash={token_hash}"
-        f"&type={token_type}"
-        f"&next={next_path}"
-    )
+        site_url   = os.environ.get("FRONTEND_URL", "https://fytic.tech")
+        next_path  = redirect_to or f"{site_url}/"
+        token_type = "email" if action_type == "signup" else action_type
+        action_url = (
+            f"{site_url}/auth/callback"
+            f"?token_hash={token_hash}"
+            f"&type={token_type}"
+            f"&next={next_path}"
+        )
 
-    api_key = os.environ.get("RESEND_API_KEY", "")
-    if not api_key:
-        return JSONResponse({})  # Resend not configured — skip silently in dev
+        api_key = os.environ.get("RESEND_API_KEY", "")
+        if not api_key:
+            return JSONResponse({})
 
-    resend.api_key = api_key
-    resend.Emails.send({
-        "from": "FyTic <noreply@fytic.tech>",
-        "to": [to_email],
-        "subject": template["subject"],
-        "html": _build_html(
-            action_url=action_url,
-            headline=template["headline"],
-            body_text=template["body"],
-            action_label=template["action_label"],
-        ),
-    })
+        resend.api_key = api_key
+        resend.Emails.send({
+            "from": "FyTic <noreply@fytic.tech>",
+            "to": [to_email],
+            "subject": template["subject"],
+            "html": _build_html(
+                action_url=action_url,
+                headline=template["headline"],
+                body_text=template["body"],
+                action_label=template["action_label"],
+            ),
+        })
+    except Exception:
+        pass  # Never let hook errors block signup
 
     return JSONResponse({})
