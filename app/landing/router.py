@@ -6,8 +6,8 @@ from fastapi import APIRouter, HTTPException
 
 from app.db import get_db
 from .models import (
-    BindUserRequest, ClientsResponse, ContactCreate, InvestorCreate, LinkGoogleRequest,
-    OkResponse, RefCodeRequest, LinkSurveyRequest,
+    BindUserRequest, CheckEmailRequest, ClientsResponse, ContactCreate, InvestorCreate,
+    LinkGoogleRequest, OkResponse, RefCodeRequest, LinkSurveyRequest,
     WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
 )
 
@@ -115,6 +115,17 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     if row.get("user_id") and "user_id" in updates:
         _sync_user_profile(db, row["user_id"], row.get("ai_question", ""), None)
     return {"ok": True}
+
+
+@router.post("/profile/check-email")
+def check_email(body: CheckEmailRequest) -> dict:
+    """Checks if an email is already registered and returns its auth provider.
+    Used by the frontend to show the correct login method before attempting signup."""
+    db = get_db()
+    result = db.table("users").select("auth_provider").eq("email", body.email).execute()
+    if result.data:
+        return {"exists": True, "provider": result.data[0].get("auth_provider", "email")}
+    return {"exists": False, "provider": None}
 
 
 @router.post("/profile/link-google")

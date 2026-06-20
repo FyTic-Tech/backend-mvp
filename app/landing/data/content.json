@@ -581,5 +581,44 @@
         "tec"
       ]
     }
+  ],
+  "benefits": [
+    {
+      "number": "01",
+      "title": "Investigación en segundos",
+      "body": "Encuentra tesis, jurisprudencias y criterios relevantes en tiempo real, sin perder hilos entre expedientes."
+    },
+    {
+      "number": "02",
+      "title": "Organización por caso",
+      "body": "Cada expediente tiene su propio espacio. Documentos, argumentos y plazos siempre trazables."
+    },
+    {
+      "number": "03",
+      "title": "100% confidencial",
+      "body": "Tus documentos nunca salen de tu entorno. Privacidad garantizada desde la arquitectura."
+    },
+    {
+      "number": "04",
+      "title": "Para México",
+      "body": "Construido sobre el marco jurídico mexicano. Jurisprudencia, criterios de SCJN y legislación actualizada."
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "Lo que antes tomaba tres días ahora lo resuelvo en una tarde.",
+      "author": "Abogada corporativa",
+      "firm": "Despacho en CDMX"
+    },
+    {
+      "quote": "Finalmente una herramienta que entiende cómo funciona la práctica legal en México.",
+      "author": "Socio litigante",
+      "firm": "Monterrey, NL"
+    },
+    {
+      "quote": "La organización por expediente cambió completamente mi flujo de trabajo.",
+      "author": "Abogada independiente",
+      "firm": "Guadalajara, JAL"
+    }
   ]
 }

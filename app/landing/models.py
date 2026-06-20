@@ -93,6 +93,10 @@ class InvestorCreate(BaseModel):
         return v
 
 
+class CheckEmailRequest(BaseModel):
+    email: str
+
+
 class RefCodeRequest(BaseModel):
     user_id: str
 
