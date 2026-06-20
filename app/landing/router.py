@@ -6,8 +6,8 @@ from fastapi import APIRouter, HTTPException
 
 from app.db import get_db
 from .models import (
-    BindUserRequest, ClientsResponse, ContactCreate, InvestorCreate, OkResponse,
-    RefCodeRequest, LinkSurveyRequest,
+    BindUserRequest, ClientsResponse, ContactCreate, InvestorCreate, LinkGoogleRequest,
+    OkResponse, RefCodeRequest, LinkSurveyRequest,
     WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
 )
 
@@ -114,6 +114,32 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     row = result.data[0]
     if row.get("user_id") and "user_id" in updates:
         _sync_user_profile(db, row["user_id"], row.get("ai_question", ""), None)
+    return {"ok": True}
+
+
+@router.post("/profile/link-google")
+def link_google(body: LinkGoogleRequest) -> dict:
+    """Links a Google OAuth user to their pre-registration waitlist entry by row ID.
+    Called from auth/callback after Google OAuth completes.
+    Uses the service key — bypasses RLS for both waitlist and users writes."""
+    db = get_db()
+
+    # 1. Update waitlist entry by row ID (not email — Google entries have email: "")
+    result = db.table("waitlist") \
+      .update({"user_id": body.user_id, "email": body.email}) \
+      .eq("id", body.waitlist_id) \
+      .neq("id", "_config") \
+      .select("ai_question") \
+      .execute()
+
+    if not result.data:
+        return {"ok": False, "error": "waitlist entry not found"}
+
+    ai_question = result.data[0].get("ai_question", "")
+
+    # 2. Update users: survey_completed + referred_by in one call
+    _sync_user_profile(db, body.user_id, ai_question, body.referred_by)
+
     return {"ok": True}
 
 

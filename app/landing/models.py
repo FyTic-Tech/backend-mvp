@@ -108,6 +108,13 @@ class BindUserRequest(BaseModel):
     new_user_id: str
 
 
+class LinkGoogleRequest(BaseModel):
+    waitlist_id: str
+    user_id: str
+    email: str
+    referred_by: Optional[str] = None
+
+
 class WaitlistEntryUpdate(BaseModel):
     role: Optional[str] = None
     area: Optional[str] = None
