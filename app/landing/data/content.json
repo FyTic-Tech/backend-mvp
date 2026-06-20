@@ -191,17 +191,17 @@
       {
         "k": "01",
         "t": "Perspectiva 100% legal",
-        "d": "Avalado por despachos mexicanos. Construimos desde adentro, con validación directa de abogados en ejercicio."
+        "d": "Construido desde adentro, con abogados en ejercicio."
       },
       {
         "k": "02",
         "t": "Tec de Monterrey",
-        "d": "Respaldados por la incubadora del Tecnológico de Monterrey con dos reconocimientos al avance en desarrollo tecnológico y de mercado."
+        "d": "Respaldados por el Tecnológico de Monterrey."
       },
       {
         "k": "03",
         "t": "Investigación de punta",
-        "d": "Desarrollamos AI, NLP y embeddings revolucionarios para el derecho mexicano y seguiremos buscando funding para seguir incorporando expertos con PhD en IA."
+        "d": "AI, NLP y embeddings diseñados para el derecho mexicano."
       }
     ],
     "closing1": "Hecho en Monterrey y CDMX.",
@@ -502,6 +502,13 @@
       "area": "Ingeniería",
       "bio": "Desarrolló para una startup de supply chain. Arquitectura de software e inteligencia artificial.",
       "tag": "Ingeniería"
+    },
+    {
+      "name": "Ximena del Angel",
+      "role": "CMO & Cofounder",
+      "area": "Marketing",
+      "bio": "Organizadora de eventos y estratega de crecimiento. Especialista en comunidad y marketing para startups.",
+      "tag": "Marketing"
     }
   ],
   "inversores": {
