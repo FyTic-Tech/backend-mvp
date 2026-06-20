@@ -96,6 +96,11 @@ class RefCodeRequest(BaseModel):
     user_id: str
 
 
+class LinkSurveyRequest(BaseModel):
+    user_id: str
+    email: str
+
+
 class WaitlistEntryUpdate(BaseModel):
     role: Optional[str] = None
     area: Optional[str] = None

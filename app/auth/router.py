@@ -169,45 +169,42 @@ def _verify_hook_signature(request: Request) -> None:
 @router.post("/auth/welcome-email")
 async def welcome_email_webhook(request: Request) -> JSONResponse:
     """Supabase Database Webhook — fires on INSERT into public.users.
-    Sends a welcome email to OAuth users (email/password users get a confirmation
-    email from the Send Email hook instead)."""
+    Sends a welcome email to OAuth users only (email/password users get
+    a confirmation email from the Send Email hook)."""
+    try:
+        secret = os.environ.get("SUPABASE_WEBHOOK_SECRET", "")
+        if secret:
+            auth = request.headers.get("Authorization", "")
+            if auth.removeprefix("Bearer ").strip() != secret:
+                return JSONResponse({"ok": False, "error": "invalid secret"})
 
-    # Verify bearer secret set in Supabase webhook headers
-    secret = os.environ.get("SUPABASE_WEBHOOK_SECRET", "")
-    if secret:
-        auth = request.headers.get("Authorization", "")
-        if auth.removeprefix("Bearer ").strip() != secret:
-            raise HTTPException(status_code=401, detail="Invalid webhook secret")
+        body = await request.json()
+        record = body.get("record", {})
+        to_email      = record.get("email", "")
+        auth_provider = record.get("auth_provider", "email")
 
-    body = await request.json()
-    record = body.get("record", {})
+        if not to_email or auth_provider == "email":
+            return JSONResponse({"ok": True})
 
-    to_email     = record.get("email", "")
-    auth_provider = record.get("auth_provider", "email")
+        api_key = os.environ.get("RESEND_API_KEY", "")
+        if not api_key:
+            return JSONResponse({"ok": True})
 
-    # Only send welcome email to OAuth users — email/password users get a
-    # confirmation email from the Send Email hook (avoid duplicate emails)
-    if not to_email or auth_provider == "email":
-        return JSONResponse({"ok": True})
-
-    api_key = os.environ.get("RESEND_API_KEY", "")
-    if not api_key:
-        return JSONResponse({"ok": True})
-
-    site_url = os.environ.get("FRONTEND_URL", "https://fytic.tech")
-
-    resend.api_key = api_key
-    resend.Emails.send({
-        "from": "FyTic <noreply@fytic.tech>",
-        "to": [to_email],
-        "subject": "Bienvenido a FyTic",
-        "html": _build_html(
-            action_url=f"{site_url}/waitlist",
-            headline="Bienvenido a FyTic.",
-            body_text="Tu cuenta está lista. Únete a la lista de espera para obtener acceso anticipado y tu enlace único de referidos.",
-            action_label="Ir a la lista de espera",
-        ),
-    })
+        site_url = os.environ.get("FRONTEND_URL", "https://fytic.tech")
+        resend.api_key = api_key
+        resend.Emails.send({
+            "from": "FyTic <noreply@fytic.tech>",
+            "to": [to_email],
+            "subject": "Bienvenido a FyTic",
+            "html": _build_html(
+                action_url=f"{site_url}/waitlist",
+                headline="Bienvenido a FyTic.",
+                body_text="Tu cuenta está lista. Únete a la lista de espera para obtener acceso anticipado y tu enlace único de referidos.",
+                action_label="Ir a la lista de espera",
+            ),
+        })
+    except Exception:
+        pass
 
     return JSONResponse({"ok": True})
 
@@ -231,14 +228,17 @@ async def send_email_hook(request: Request) -> JSONResponse:
         if not template or not to_email or not token_hash:
             return JSONResponse({})
 
-        site_url   = os.environ.get("FRONTEND_URL", "https://fytic.tech")
-        next_path  = redirect_to or f"{site_url}/"
-        token_type = "email" if action_type == "signup" else action_type
+        site_url    = os.environ.get("FRONTEND_URL", "https://fytic.tech")
+        supabase_url = os.environ.get("SUPABASE_URL", "")
+        token_type  = "signup" if action_type == "signup" else action_type
+        redirect_to_url = redirect_to or f"{site_url}/auth/callback"
+        # Point to Supabase's own verify endpoint — it handles OTP exchange
+        # and redirects to our callback with an established session.
         action_url = (
-            f"{site_url}/auth/callback"
-            f"?token_hash={token_hash}"
+            f"{supabase_url}/auth/v1/verify"
+            f"?token={token_hash}"
             f"&type={token_type}"
-            f"&next={next_path}"
+            f"&redirect_to={site_url}/auth/callback"
         )
 
         api_key = os.environ.get("RESEND_API_KEY", "")

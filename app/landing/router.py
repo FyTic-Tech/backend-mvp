@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.db import get_db
 from .models import (
-    ClientsResponse, ContactCreate, InvestorCreate, OkResponse, RefCodeRequest,
+    ClientsResponse, ContactCreate, InvestorCreate, OkResponse, RefCodeRequest, LinkSurveyRequest,
     WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
 )
 
@@ -86,6 +86,20 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     )
     if not result.data:
         raise HTTPException(status_code=404, detail="entry not found")
+    return {"ok": True}
+
+
+@router.post("/profile/link-survey")
+def link_survey(body: LinkSurveyRequest) -> dict:
+    """Links anonymous waitlist entries (by email) to a registered user.
+    Called after email confirmation or OAuth sign-in."""
+    db = get_db()
+    db.table("waitlist") \
+      .update({"user_id": body.user_id}) \
+      .eq("email", body.email) \
+      .is_("user_id", "null") \
+      .neq("id", "_config") \
+      .execute()
     return {"ok": True}
 
 
