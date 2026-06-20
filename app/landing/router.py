@@ -157,7 +157,7 @@ def link_survey(body: LinkSurveyRequest) -> dict:
     result = db.table("waitlist") \
       .update({"user_id": body.user_id}) \
       .eq("email", body.email) \
-      .is_("user_id", "null") \
+      .filter("user_id", "is", "null") \
       .neq("id", "_config") \
       .select("ai_question") \
       .execute()
