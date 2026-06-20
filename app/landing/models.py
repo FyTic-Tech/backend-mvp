@@ -102,6 +102,11 @@ class LinkSurveyRequest(BaseModel):
     email: str
 
 
+class BindUserRequest(BaseModel):
+    anonymous_id: str
+    new_user_id: str
+
+
 class WaitlistEntryUpdate(BaseModel):
     role: Optional[str] = None
     area: Optional[str] = None

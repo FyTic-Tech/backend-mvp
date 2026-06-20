@@ -6,7 +6,8 @@ from fastapi import APIRouter, HTTPException
 
 from app.db import get_db
 from .models import (
-    ClientsResponse, ContactCreate, InvestorCreate, OkResponse, RefCodeRequest, LinkSurveyRequest,
+    BindUserRequest, ClientsResponse, ContactCreate, InvestorCreate, OkResponse,
+    RefCodeRequest, LinkSurveyRequest,
     WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
 )
 
@@ -113,6 +114,37 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     row = result.data[0]
     if row.get("user_id") and "user_id" in updates:
         _sync_user_profile(db, row["user_id"], row.get("ai_question", ""), None)
+    return {"ok": True}
+
+
+@router.post("/profile/bind-user")
+def bind_user(body: BindUserRequest) -> dict:
+    """Transfers anonymous survey data to a new permanent user after email confirmation.
+    Called when anonymous_id != new_user_id (email/password signup path only)."""
+    db = get_db()
+
+    # Read anonymous user's data before deleting
+    anon = db.table("users").select("referred_by").eq("id", body.anonymous_id).execute()
+    anon_referred_by = (anon.data[0].get("referred_by") or "") if anon.data else ""
+
+    # Move waitlist entries from anonymous user to permanent user
+    db.table("waitlist").update({"user_id": body.new_user_id}) \
+      .eq("user_id", body.anonymous_id).execute()
+
+    # Sync profile: survey_completed + referred_by
+    entries = db.table("waitlist").select("ai_question").eq("user_id", body.new_user_id).execute()
+    user_updates: dict = {}
+    if entries.data and any(e.get("ai_question") for e in entries.data):
+        user_updates["survey_completed"] = True
+        user_updates["survey_completed_at"] = datetime.now(timezone.utc).isoformat()
+    if anon_referred_by:
+        user_updates["referred_by"] = anon_referred_by
+    if user_updates:
+        db.table("users").update(user_updates).eq("id", body.new_user_id).execute()
+
+    # Clean up anonymous user row
+    db.table("users").delete().eq("id", body.anonymous_id).execute()
+
     return {"ok": True}
 
 
