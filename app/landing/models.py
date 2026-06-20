@@ -15,6 +15,7 @@ class WaitlistEntryCreate(BaseModel):
     process: str = ""
     ai_question: str = ""
     user_id: Optional[str] = None
+    referred_by: Optional[str] = None  # handled in users table, not stored in waitlist
 
     @field_validator("name", mode="before")
     @classmethod

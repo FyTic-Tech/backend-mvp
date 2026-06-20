@@ -14,6 +14,23 @@ router = APIRouter()
 _DATA = Path(__file__).parent / "data"
 
 
+def _sync_user_profile(db, user_id: str, ai_question: str, referred_by: str | None) -> None:
+    """Update users table after a waitlist submission that has a known user_id.
+    Sets survey_completed=True when the survey is answered, and referred_by if provided.
+    """
+    user_updates: dict = {}
+    if ai_question:
+        user_updates["survey_completed"] = True
+        user_updates["survey_completed_at"] = datetime.now(timezone.utc).isoformat()
+    if referred_by:
+        # Only set referred_by if not already set (never overwrite)
+        existing = db.table("users").select("referred_by").eq("id", user_id).execute()
+        if existing.data and not existing.data[0].get("referred_by"):
+            user_updates["referred_by"] = referred_by
+    if user_updates:
+        db.table("users").update(user_updates).eq("id", user_id).execute()
+
+
 @router.get("/content")
 def get_content() -> dict:
     return json.loads((_DATA / "content.json").read_text(encoding="utf-8"))
@@ -49,8 +66,11 @@ def submit_waitlist(entry: WaitlistEntryCreate) -> WaitlistPostResponse:
         raise HTTPException(status_code=403, detail="waitlist is closed")
 
     record = entry.model_dump()
-    user_id = record.get("user_id")
+    user_id   = record.pop("user_id", None)
+    referred_by = record.pop("referred_by", None)  # not stored in waitlist table
     record["submitted_at"] = datetime.now(timezone.utc).isoformat()
+    if user_id:
+        record["user_id"] = user_id
 
     # UPSERT: if this user_id already has an entry, update it instead of inserting
     if user_id:
@@ -60,13 +80,16 @@ def submit_waitlist(entry: WaitlistEntryCreate) -> WaitlistPostResponse:
         if existing.data:
             entry_id = existing.data[0]["id"]
             updates = {k: v for k, v in record.items() if v not in (None, "")}
-            updates.pop("user_id", None)  # user_id is already correct
+            updates.pop("user_id", None)
             db.table("waitlist").update(updates).eq("id", entry_id).execute()
+            _sync_user_profile(db, user_id, record.get("ai_question", ""), referred_by)
             return {"ok": True, "id": entry_id}
 
     result = db.table("waitlist").insert(record).select().execute()
     if not result.data:
         raise HTTPException(status_code=500, detail="waitlist insert failed")
+    if user_id:
+        _sync_user_profile(db, user_id, record.get("ai_question", ""), referred_by)
     return {"ok": True, "id": result.data[0]["id"]}
 
 
@@ -81,25 +104,39 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
         .update(updates)
         .eq("id", entry_id)
         .neq("id", "_config")
-        .select()
+        .select("user_id, ai_question")
         .execute()
     )
     if not result.data:
         raise HTTPException(status_code=404, detail="entry not found")
+    # If this PATCH set a user_id (e.g. from auth/callback after OAuth), sync the profile
+    row = result.data[0]
+    if row.get("user_id") and "user_id" in updates:
+        _sync_user_profile(db, row["user_id"], row.get("ai_question", ""), None)
     return {"ok": True}
 
 
 @router.post("/profile/link-survey")
 def link_survey(body: LinkSurveyRequest) -> dict:
     """Links anonymous waitlist entries (by email) to a registered user.
-    Called after email confirmation or OAuth sign-in."""
+    Called after email confirmation or OAuth sign-in.
+    Also marks survey_completed if the linked entry has ai_question filled."""
     db = get_db()
-    db.table("waitlist") \
+    result = db.table("waitlist") \
       .update({"user_id": body.user_id}) \
       .eq("email", body.email) \
       .is_("user_id", "null") \
       .neq("id", "_config") \
+      .select("ai_question") \
       .execute()
+
+    # If any linked entry has ai_question → survey was completed before registration
+    if result.data and any(r.get("ai_question") for r in result.data):
+        db.table("users").update({
+            "survey_completed": True,
+            "survey_completed_at": datetime.now(timezone.utc).isoformat(),
+        }).eq("id", body.user_id).execute()
+
     return {"ok": True}
 
 
