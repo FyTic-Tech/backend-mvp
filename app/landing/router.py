@@ -151,8 +151,8 @@ def bind_user(body: BindUserRequest) -> dict:
 @router.post("/profile/link-survey")
 def link_survey(body: LinkSurveyRequest) -> dict:
     """Links anonymous waitlist entries (by email) to a registered user.
-    Called after email confirmation or OAuth sign-in.
-    Also marks survey_completed if the linked entry has ai_question filled."""
+    Also marks survey_completed and sets referred_by — using the service key
+    so both writes bypass RLS (no client session required)."""
     db = get_db()
     result = db.table("waitlist") \
       .update({"user_id": body.user_id}) \
@@ -162,12 +162,17 @@ def link_survey(body: LinkSurveyRequest) -> dict:
       .select("ai_question") \
       .execute()
 
-    # If any linked entry has ai_question → survey was completed before registration
+    user_updates: dict = {}
+
     if result.data and any(r.get("ai_question") for r in result.data):
-        db.table("users").update({
-            "survey_completed": True,
-            "survey_completed_at": datetime.now(timezone.utc).isoformat(),
-        }).eq("id", body.user_id).execute()
+        user_updates["survey_completed"] = True
+        user_updates["survey_completed_at"] = datetime.now(timezone.utc).isoformat()
+
+    if body.referred_by:
+        user_updates["referred_by"] = body.referred_by
+
+    if user_updates:
+        db.table("users").update(user_updates).eq("id", body.user_id).execute()
 
     return {"ok": True}
 

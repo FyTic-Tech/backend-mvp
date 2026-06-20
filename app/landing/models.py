@@ -100,6 +100,7 @@ class RefCodeRequest(BaseModel):
 class LinkSurveyRequest(BaseModel):
     user_id: str
     email: str
+    referred_by: Optional[str] = None
 
 
 class BindUserRequest(BaseModel):
