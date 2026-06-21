@@ -117,6 +117,61 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     return {"ok": True}
 
 
+@router.post("/profile/autofill")
+def autofill_profile(body: RefCodeRequest) -> dict:
+    """Reads the user's waitlist survey answers and fills any empty profile fields.
+    Called when the user visits /perfil and has incomplete profile data."""
+    db = get_db()
+    user_id = body.user_id
+
+    # Only fill fields that are currently NULL
+    profile = db.table("users").select("practice_area, position, firm_name").eq("id", user_id).execute()
+    if not profile.data:
+        return {"ok": False, "suggestions": {}}
+
+    current = profile.data[0]
+
+    # Fetch the completed waitlist entry for this user
+    waitlist = db.table("waitlist").select("role, area") \
+      .eq("user_id", user_id).not_.is_("ai_question", "null") \
+      .neq("ai_question", "").neq("id", "_config").execute()
+    if not waitlist.data:
+        return {"ok": True, "suggestions": {}}
+
+    entry = waitlist.data[0]
+    role = entry.get("role", "")
+    area = entry.get("area", "")
+
+    ROLE_TO_POSITION = {
+        "despacho":      "Abogado en despacho",
+        "independiente": "Abogado independiente",
+        "corporativo":   "Abogado corporativo",
+        "becario":       "Becario",
+    }
+    AREA_TO_PRACTICE = {
+        "civil":       "Derecho civil",
+        "mercantil":   "Derecho mercantil",
+        "penal":       "Derecho penal",
+        "fiscal":      "Derecho fiscal",
+        "laboral":     "Derecho laboral",
+        "corporativo": "Derecho corporativo",
+        "familiar":    "Derecho familiar",
+    }
+
+    suggestions: dict = {}
+    if not current.get("position") and role in ROLE_TO_POSITION:
+        suggestions["position"] = ROLE_TO_POSITION[role]
+    if not current.get("practice_area") and area in AREA_TO_PRACTICE:
+        suggestions["practice_area"] = AREA_TO_PRACTICE[area]
+    if not current.get("firm_name") and role == "independiente":
+        suggestions["firm_name"] = "Independiente"
+
+    if suggestions:
+        db.table("users").update(suggestions).eq("id", user_id).execute()
+
+    return {"ok": True, "suggestions": suggestions}
+
+
 @router.patch("/profile/update")
 def update_profile(body: ProfileUpdateRequest) -> dict:
     """Update editable profile fields for a user."""

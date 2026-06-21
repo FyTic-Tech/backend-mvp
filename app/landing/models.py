@@ -104,6 +104,7 @@ class ProfileUpdateRequest(BaseModel):
     position: Optional[str] = None
     practice_area: Optional[str] = None
     phone: Optional[str] = None
+    team_size: Optional[int] = None
 
 
 class RefCodeRequest(BaseModel):
