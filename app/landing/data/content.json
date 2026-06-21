@@ -622,5 +622,32 @@
       "author": "Abogada independiente",
       "firm": "Guadalajara, JAL"
     }
+  ],
+  "whyFytic": [
+    {
+      "quote": "Índice y criterios del Semanario Judicial de la Federación actualizados automáticamente.",
+      "author": "Investigación jurídica",
+      "firm": "Marco legal 100% mexicano"
+    },
+    {
+      "quote": "Cada expediente tiene su propio espacio: documentos, criterios, argumentos y plazos en un solo lugar.",
+      "author": "Organización por caso",
+      "firm": "Sin más carpetas dispersas"
+    },
+    {
+      "quote": "Tus documentos nunca salen de tu entorno. Cifrado de extremo a extremo, sin acceso de terceros.",
+      "author": "Confidencialidad total",
+      "firm": "Cumplimiento LFPDPPP"
+    },
+    {
+      "quote": "Las reformas al DOF y nuevos criterios de la SCJN llegan a tu plataforma sin que tengas que buscarlos.",
+      "author": "Actualizaciones automáticas",
+      "firm": "Sin seguimiento manual"
+    },
+    {
+      "quote": "Genera cláusulas, contratos y documentos con IA en segundos, con jurisprudencia vigente como respaldo.",
+      "author": "Redacción asistida por IA",
+      "firm": "Más tiempo para lo que importa"
+    }
   ]
 }
