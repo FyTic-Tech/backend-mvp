@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.landing.router import router as landing_router
-from app.auth.router import router as auth_router
 
 app = FastAPI(title="FyTic API", version="0.1.0")
 
@@ -15,7 +14,6 @@ app.add_middleware(
 )
 
 app.include_router(landing_router, prefix="/api")
-app.include_router(auth_router,    prefix="/api")
 
 
 @app.on_event("startup")
