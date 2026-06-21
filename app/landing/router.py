@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException
 from app.db import get_db
 from .models import (
     BindUserRequest, CheckEmailRequest, ClientsResponse, ContactCreate, InvestorCreate,
-    LinkGoogleRequest, OkResponse, RefCodeRequest, LinkSurveyRequest,
+    LinkGoogleRequest, OkResponse, ProfileUpdateRequest, RefCodeRequest, LinkSurveyRequest,
     WaitlistEntryCreate, WaitlistEntryUpdate, WaitlistPostResponse, WaitlistStatusResponse,
 )
 
@@ -115,6 +115,29 @@ def update_waitlist(entry_id: str, entry: WaitlistEntryUpdate) -> OkResponse:
     if row.get("user_id") and "user_id" in updates:
         _sync_user_profile(db, row["user_id"], row.get("ai_question", ""), None)
     return {"ok": True}
+
+
+@router.patch("/profile/update")
+def update_profile(body: ProfileUpdateRequest) -> dict:
+    """Update editable profile fields for a user."""
+    db = get_db()
+    updates = {k: v for k, v in body.model_dump(exclude={"user_id"}).items() if v is not None}
+    if not updates:
+        return {"ok": True}
+    db.table("users").update(updates).eq("id", body.user_id).execute()
+    return {"ok": True}
+
+
+@router.get("/profile/referrals/{ref_code}")
+def get_referrals(ref_code: str) -> dict:
+    """Returns the list of users who registered via this referral link."""
+    db = get_db()
+    result = db.table("users") \
+      .select("email, full_name, created_at") \
+      .eq("referred_by", ref_code) \
+      .order("created_at", desc=True) \
+      .execute()
+    return {"referrals": result.data or []}
 
 
 @router.post("/profile/check-email")

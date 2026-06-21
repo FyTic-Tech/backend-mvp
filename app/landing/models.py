@@ -97,6 +97,15 @@ class CheckEmailRequest(BaseModel):
     email: str
 
 
+class ProfileUpdateRequest(BaseModel):
+    user_id: str
+    full_name: Optional[str] = None
+    firm_name: Optional[str] = None
+    position: Optional[str] = None
+    practice_area: Optional[str] = None
+    phone: Optional[str] = None
+
+
 class RefCodeRequest(BaseModel):
     user_id: str
 
