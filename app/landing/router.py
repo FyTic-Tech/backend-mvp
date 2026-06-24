@@ -54,7 +54,9 @@ def get_waitlist_status() -> WaitlistStatusResponse:
     db = get_db()
     rows = db.table("waitlist").select("id,active").execute()
     config = next((r for r in rows.data if r["id"] == "_config"), None)
-    count  = sum(1 for r in rows.data if r["id"] != "_config")
+    # Count from users table — reflects actual registered users, not raw survey submissions
+    users_result = db.table("users").select("id", count="exact").execute()
+    count = users_result.count or 0
     return {"active": config["active"] if config else True, "count": count}
 
 
