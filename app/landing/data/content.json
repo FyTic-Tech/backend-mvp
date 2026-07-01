@@ -175,6 +175,10 @@
     "title": "Despachos que ya investigan con FyTic",
     "cta": "Asegura tu reputación y gana una ventaja competitiva."
   },
+  "clients": {
+    "visible": false,
+    "items": []
+  },
   "homeCta": {
     "word": "FyTic",
     "button": "Quiero probarlo gratis"

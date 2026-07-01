@@ -39,13 +39,11 @@ def get_content() -> dict:
 
 @router.get("/clients", response_model=ClientsResponse)
 def get_clients() -> ClientsResponse:
-    db = get_db()
-    rows = db.table("clients").select("*").order("sort_order").execute()
-    config = next((r for r in rows.data if r["id"] == "_config"), None)
-    firms  = [r for r in rows.data if r["id"] != "_config" and r.get("name")]
+    data = json.loads((_DATA / "content.json").read_text(encoding="utf-8"))
+    cfg = data.get("clients", {})
     return {
-        "visible": config["visible"] if config else False,
-        "clients": [r["name"] for r in firms],
+        "visible": cfg.get("visible", False),
+        "clients": cfg.get("items", []),
     }
 
 
