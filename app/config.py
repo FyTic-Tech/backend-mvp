@@ -6,7 +6,7 @@ class Settings(BaseSettings):
 
     port: int = 8000
     frontend_url: str = "http://localhost:5173"
-    app_frontend_url: str = ""
+    app_frontend_url: str = "https://app.fytic.tech"
     environment: str = "development"
 
     supabase_url: str = ""
