@@ -27,6 +27,7 @@ def law_db_scope_stats(user: AuthUser = Depends(get_current_user)) -> dict:
         db.table("fytic_library")
         .select("scope, state, group_name")
         .eq("is_active", True)
+        .range(0, 9999)
         .execute()
     )
 
@@ -78,6 +79,7 @@ def list_law_db(user: AuthUser = Depends(get_current_user)) -> dict:
         .order("state")
         .order("group_name")
         .order("name")
+        .range(0, 9999)
         .execute()
     )
 

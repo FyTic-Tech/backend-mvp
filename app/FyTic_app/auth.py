@@ -72,7 +72,7 @@ def get_current_user(authorization: str = Header(...)) -> AuthUser:
 
 def require_org(user: AuthUser = Depends(get_current_user)) -> AuthUser:
     """Requires a full org member (member, admin, super_admin, or internal). Blocks limited."""
-    if user.role in INTERNAL_ROLES:
+    if user.role in INTERNAL_ROLES or user.role == "admin":
         return user
     if not user.org_id:
         raise HTTPException(403, "No organization assigned")
