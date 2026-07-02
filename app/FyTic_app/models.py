@@ -9,6 +9,8 @@ class MeResponse(BaseModel):
     id: str
     email: str
     fullName: str | None = None
+    firmName: str | None = None
+    teamSize: int | None = None
     organization: str | None = None
     role: str
     position: str | None = None
@@ -20,11 +22,13 @@ class MeResponse(BaseModel):
     referredBy: str | None = None
     surveyCompleted: bool = False
     tokensUsed: int = 0
-    tokenLimit: int = 50
+    tokenLimit: int | None = None
 
 
 class MePatch(BaseModel):
     fullName: str | None = None
+    firmName: str | None = None
+    teamSize: int | None = None
     position: str | None = None
     practiceArea: str | None = None
     phone: str | None = None
@@ -330,11 +334,15 @@ class LawDoc(BaseModel):
     id: str
     name: str
     scope: str
+    state: str | None = None
     year: int | None = None
     vigente: bool = True
     hasNewReforms: bool = False
     url: str | None = None
     pdfLink: str | None = None
+    otherLink: str | None = None
+    publishDate: str | None = None
+    lastUpdate: str | None = None
 
 
 class LawGroup(BaseModel):

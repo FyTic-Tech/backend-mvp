@@ -71,22 +71,24 @@ def get_current_user(authorization: str = Header(...)) -> AuthUser:
 
 
 def require_org(user: AuthUser = Depends(get_current_user)) -> AuthUser:
+    """Requires a full org member (member, admin, super_admin, or internal). Blocks limited."""
+    if user.role in INTERNAL_ROLES:
+        return user
     if not user.org_id:
         raise HTTPException(403, "No organization assigned")
     if user.role not in ORG_ROLES:
         raise HTTPException(403, "Not an org member")
+    if user.role == "limited":
+        raise HTTPException(403, "Access restricted: limited role cannot use this resource")
     return user
 
 
 def require_write(user: AuthUser = Depends(require_org)) -> AuthUser:
-    """Blocks limited role from mutating endpoints marked 📖."""
-    if user.role == "limited":
-        raise HTTPException(403, "Limited role is read-only for this action")
     return user
 
 
 def require_admin(user: AuthUser = Depends(require_org)) -> AuthUser:
-    if user.role not in ("admin", "super_admin"):
+    if user.role not in {"admin", "super_admin", "internal_dev", "internal_team"}:
         raise HTTPException(403, "Admin role required")
     return user
 

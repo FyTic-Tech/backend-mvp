@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
 
 from app.db import get_db
-from app.FyTic_app.auth import AuthUser, require_org
+from app.FyTic_app.auth import AuthUser, get_current_user
 from app.FyTic_app.models import LawDoc, LawGroup
 
 router = APIRouter(tags=["law-db"])
 
 
 @router.get("/law-db", response_model=dict)
-def list_law_db(user: AuthUser = Depends(require_org)) -> dict:
+def list_law_db(user: AuthUser = Depends(get_current_user)) -> dict:
     db = get_db()
     rows = (
         db.table("fytic_library")
@@ -30,11 +30,15 @@ def list_law_db(user: AuthUser = Depends(require_org)) -> dict:
                 id=row["id"],
                 name=row.get("name", ""),
                 scope=row.get("scope", "national"),
+                state=row.get("state"),
                 year=year,
                 vigente=bool(row.get("vigente", True)),
                 hasNewReforms=bool(row.get("has_new_reforms", False)),
                 url=row.get("url"),
                 pdfLink=row.get("pdf_link"),
+                otherLink=row.get("other_link"),
+                publishDate=row.get("publish_date"),
+                lastUpdate=row.get("last_update"),
             ).model_dump()
         )
     return {"groups": [{"name": k, "docs": v} for k, v in groups.items()]}
