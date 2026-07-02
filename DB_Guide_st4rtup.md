@@ -164,7 +164,7 @@ One row per registered person. `id` matches `auth.users.id` in Supabase Auth.
 | `'super_admin'` | Platform-wide | Supabase JWT + mandatory `X-Internal-Key` header | Full platform access — all orgs, all tables, service ops |
 | `'admin'` | Org-scoped | Supabase JWT | Full CRUD on org content, invite/remove/update members |
 | `'member'` | Org-scoped | Supabase JWT | Full CRUD on documents, clients, templates, org view, library, scan |
-| `'limited'` | Org-scoped | Supabase JWT | Read + create only — no delete, no member management. Also used for visitors accessing shared links |
+| `'limited'` | None (no org required) | Supabase JWT | **Default role assigned to all new signups via DB trigger.** Can only call `GET /me` and `GET /law-db` — every other endpoint returns 403. Upgraded to `admin` when an org is created via the `create_organization_for_user` RPC. |
 | `'internal_dev'` | Platform-wide | Supabase JWT + mandatory `X-Internal-Key` header | Internal FyTic developer access — for the internal admin frontend |
 | `'internal_team'` | Platform-wide | Supabase JWT + mandatory `X-Internal-Key` header | Internal FyTic team access (support, ops) — for the internal admin frontend |
 
@@ -172,10 +172,18 @@ One row per registered person. `id` matches `auth.users.id` in Supabase Auth.
 
 **Key behaviors:**
 - `org_id` is nullable — a user exists without an org while in the pre-onboarding or waitlist-only state
+- `role` starts as `'limited'` for all new signups (set by DB trigger — see §7). Upgraded to `'admin'` by the `create_organization_for_user` RPC when the org is created
 - `referred_by` stores a `ref_code` string, not a UUID
 - Never manually set `modified_at` — trigger handles it
 - Always filter `WHERE deleted_at IS NULL` in app queries
 - `tokens_used_today` and `tokens_reset_at` exist in the DB but the `consume_token` RPC is not yet implemented. AI token quota is not actively enforced — token-related API responses are hardcoded for now
+
+**Check constraint on `role`:**
+`chk_users_role` enforces that `role` is one of the six valid values:
+```sql
+CHECK (role IN ('super_admin', 'admin', 'member', 'limited', 'internal_dev', 'internal_team'))
+```
+If you need to add a new role, drop and recreate this constraint (see §7).
 
 ---
 
@@ -493,12 +501,13 @@ users
 
 ### New user signs up
 1. Supabase Auth creates `auth.users` row
-2. Backend creates `users` row with `org_id = NULL`
-3. If `?ref=<code>` was in the URL, set `referred_by = <code>` in `users`
+2. A DB trigger (`on_auth_user_created`) fires and inserts a row into `public.users` with `role = 'limited'` and `org_id = NULL`
+3. If `?ref=<code>` was in the URL, backend sets `referred_by = <code>` in `users`
 4. Backend links any existing `waitlist` row to this `user_id` (by email)
 5. User completes onboarding survey → `survey_completed = true`, `survey_completed_at = now()`
-6. When ready to activate → call `SELECT create_organization_for_user('<user_id>')`
-7. RPC creates `organizations` row + `subscriptions` row (free plan), sets `users.org_id` and `users.role = 'admin'`
+6. While `role = 'limited'`: user can only access `GET /me` and `GET /law-db` — the app shows only the Biblioteca Legal and Settings sections
+7. When ready to activate → call `SELECT create_organization_for_user('<user_id>')`
+8. RPC creates `organizations` row + `subscriptions` row (free plan), sets `users.org_id` and `users.role = 'admin'`
 
 ### AI token check (not yet enforced)
 
@@ -580,4 +589,65 @@ SELECT name, used_bytes, used_bytes / 1e9 AS gb FROM organizations WHERE id = '<
 
 -- See all members of an org
 SELECT id, email, role, is_active FROM users WHERE org_id = '<org_id>' AND deleted_at IS NULL;
+
+-- See current roles of all users
+SELECT email, role FROM public.users ORDER BY role, email;
+```
+
+### New-user trigger (run once — assigns `limited` role on every signup)
+
+```sql
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+BEGIN
+  INSERT INTO public.users (id, email, role, auth_provider, created_at, modified_at)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    'limited',
+    COALESCE(NEW.raw_app_meta_data->>'provider', 'email'),
+    NOW(),
+    NOW()
+  )
+  ON CONFLICT (id) DO NOTHING;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+```
+
+### Fix `chk_users_role` constraint (add/change allowed role values)
+
+```sql
+-- Inspect current constraint
+SELECT pg_get_constraintdef(c.oid) AS current_constraint
+FROM pg_constraint c
+JOIN pg_class t ON c.conrelid = t.oid
+JOIN pg_namespace n ON t.relnamespace = n.oid
+WHERE t.relname = 'users' AND n.nspname = 'public' AND c.conname = 'chk_users_role';
+
+-- Drop and recreate with all six roles
+ALTER TABLE public.users DROP CONSTRAINT chk_users_role;
+ALTER TABLE public.users ADD CONSTRAINT chk_users_role
+  CHECK (role IN ('super_admin', 'admin', 'member', 'limited', 'internal_dev', 'internal_team'));
+```
+
+### Reset all users to `limited` (emergency access lockdown)
+
+Run AFTER fixing the constraint above.
+
+```sql
+-- Demote everyone except platform-level internal accounts
+UPDATE public.users
+SET role = 'limited'
+WHERE role NOT IN ('super_admin', 'internal_dev', 'internal_team');
+
+-- Restore your own admin access
+UPDATE public.users
+SET role = 'admin'
+WHERE email = '<your-email>';
 ```
