@@ -1,11 +1,20 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.landing.router import router as landing_router
 from app.FyTic_app.router import router as app_router
 
 app = FastAPI(title="FyTic API", version="0.2.0")
+
+
+@app.exception_handler(Exception)
+async def _unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    """Ensure unhandled exceptions still return a proper response so CORSMiddleware
+    can attach the Access-Control-Allow-Origin header (otherwise the browser sees
+    a CORS error that masks the real 500)."""
+    return JSONResponse(status_code=500, content={"detail": "Internal server error"})
 
 app.add_middleware(
     CORSMiddleware,

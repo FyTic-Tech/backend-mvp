@@ -70,7 +70,10 @@ def _build_me(user_id: str, db) -> MeResponse:
         raise HTTPException(404, "User not found")
     u = user_row.data[0]
 
-    _autofill_from_waitlist(db, user_id, u)
+    try:
+        _autofill_from_waitlist(db, user_id, u)
+    except Exception:
+        pass  # autofill is best-effort; never crash the /me response
 
     org_name: str | None = None
     if u.get("org_id"):
