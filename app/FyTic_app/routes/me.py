@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.db import get_db
@@ -5,6 +7,7 @@ from app.FyTic_app.auth import AuthUser, get_current_user
 from app.FyTic_app.models import MePatch, MeResponse
 
 router = APIRouter(tags=["me"])
+logger = logging.getLogger(__name__)
 
 _ROLE_MAP = {
     "despacho":      "Abogado en despacho",
@@ -87,7 +90,7 @@ def _build_me(user_id: str, db) -> MeResponse:
         email=u.get("email", ""),
         fullName=u.get("full_name"),
         firmName=u.get("firm_name"),
-        teamSize=u.get("team_size"),
+        teamSize=str(u["team_size"]) if u.get("team_size") is not None else None,
         organization=org_name,
         role=u.get("role", ""),
         position=u.get("position"),
@@ -105,25 +108,37 @@ def _build_me(user_id: str, db) -> MeResponse:
 
 @router.get("/me", response_model=MeResponse)
 def get_me(user: AuthUser = Depends(get_current_user)) -> MeResponse:
-    return _build_me(user.user_id, get_db())
+    try:
+        return _build_me(user.user_id, get_db())
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.exception("Unhandled error in GET /me for user %s: %s", user.user_id, exc)
+        raise HTTPException(status_code=500, detail="Failed to load profile") from exc
 
 
 @router.patch("/me", response_model=MeResponse)
 def patch_me(body: MePatch, user: AuthUser = Depends(get_current_user)) -> MeResponse:
-    db = get_db()
-    updates: dict = {}
-    if body.fullName is not None:
-        updates["full_name"] = body.fullName
-    if body.firmName is not None:
-        updates["firm_name"] = body.firmName
-    if body.teamSize is not None:
-        updates["team_size"] = body.teamSize
-    if body.position is not None:
-        updates["position"] = body.position
-    if body.practiceArea is not None:
-        updates["practice_area"] = body.practiceArea
-    if body.phone is not None:
-        updates["phone"] = body.phone
-    if updates:
-        db.table("users").update(updates).eq("id", user.user_id).execute()
-    return _build_me(user.user_id, db)
+    try:
+        db = get_db()
+        updates: dict = {}
+        if body.fullName is not None:
+            updates["full_name"] = body.fullName
+        if body.firmName is not None:
+            updates["firm_name"] = body.firmName
+        if body.teamSize is not None:
+            updates["team_size"] = body.teamSize
+        if body.position is not None:
+            updates["position"] = body.position
+        if body.practiceArea is not None:
+            updates["practice_area"] = body.practiceArea
+        if body.phone is not None:
+            updates["phone"] = body.phone
+        if updates:
+            db.table("users").update(updates).eq("id", user.user_id).execute()
+        return _build_me(user.user_id, db)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.exception("Unhandled error in PATCH /me for user %s: %s", user.user_id, exc)
+        raise HTTPException(status_code=500, detail="Failed to update profile") from exc
