@@ -10,7 +10,7 @@ class MeResponse(BaseModel):
     email: str
     fullName: str | None = None
     firmName: str | None = None
-    teamSize: int | None = None
+    teamSize: str | None = None
     organization: str | None = None
     role: str
     position: str | None = None
@@ -28,7 +28,7 @@ class MeResponse(BaseModel):
 class MePatch(BaseModel):
     fullName: str | None = None
     firmName: str | None = None
-    teamSize: int | None = None
+    teamSize: str | None = None
     position: str | None = None
     practiceArea: str | None = None
     phone: str | None = None
